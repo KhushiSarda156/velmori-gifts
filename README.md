@@ -7,10 +7,6 @@
 <h3 align="center">Because every gift tells a story.</h3>
 
 <p align="center">
-  <a href="https://velmori-gifts.netlify.app/"><strong>Explore the Live Site »</strong></a>
-</p>
-
-<p align="center">
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
@@ -46,7 +42,7 @@ We designed this site with modern web standards, making it load lightning-fast a
 *   **Google Font Preconnecting**: Speeds up text rendering times by establishing early connections to font origins.
 *   **Resource Lazy Loading**: Product images and testimonials below the fold use native `loading="lazy"` and `decoding="async"` tags.
 *   **Perfect Open Graph Metadata**: Comprehensive Open Graph and Twitter Card tags to ensure link sharing on WhatsApp, Telegram, or Facebook displays a beautiful branded preview card.
-*   **Canonical Linking**: Prevents search engine indexing conflicts by explicitly setting `https://velmori-gifts.netlify.app/` as the primary address.
+*   **Canonical Linking**: Prevents search engine indexing conflicts by explicitly setting the canonical tag as the primary address.
 *   **Sitemap & Robots**: Full crawler guidance via custom `sitemap.xml` and `robots.txt` configuration files.
 
 ---
