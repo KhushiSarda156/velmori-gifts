@@ -24,41 +24,15 @@ graph TD
 
 ## ⚡ Core JavaScript Subsystems
 
-### 1. Progressive Animation Frame Preloader (Critical for FCP)
+### 1. Progressive Animation Frame Preloader (Critical for FCP & 60fps Scrubbing)
 To power the canvas-scrub animation, the page renders 240 compressed frames (`ezgif-frame-001.jpg` to `ezgif-frame-240.jpg`). 
 
-To avoid network bottlenecking on page load, we use a **Progressive Preloading** strategy:
-- **Phase 1**: Load the first `10` frames synchronously inside the preloader loop to display the initial visible state immediately.
-- **Phase 2**: After `500ms`, a chunked loader takes over, querying `requestIdleCallback` (or fallback `setTimeout`) to load remaining frames in batches of `15`. This prevents network congestion and keeps browser threads free.
-- **ImageBitmaps**: Frames are converted to GPU-resident `ImageBitmap` formats using `createImageBitmap(img)`. When drawing to canvas, the browser skips CPU-to-GPU memory transfer, allowing instant, stutter-free frames.
-
-```javascript
-// Progressive Preloader Logic
-const initialLoad = 10;
-for (let i = 0; i < Math.min(initialLoad, TOTAL_FRAMES); i++) {
-  loadFrame(i);
-}
-
-// Background idle chunk loader
-setTimeout(() => {
-  let currentIdx = initialLoad;
-  function loadChunk() {
-    const chunkEnd = Math.min(currentIdx + 15, TOTAL_FRAMES);
-    for (let i = currentIdx; i < chunkEnd; i++) {
-      loadFrame(i);
-    }
-    currentIdx = chunkEnd;
-    if (currentIdx < TOTAL_FRAMES) {
-      if (window.requestIdleCallback) {
-        window.requestIdleCallback(loadChunk);
-      } else {
-        setTimeout(loadChunk, 100);
-      }
-    }
-  }
-  loadChunk();
-}, 500);
-```
+To avoid network bottlenecking and eliminate any initial blank screen or scroll stutter, we use a **3-Tier Progressive Preloading & Stride Scrubbing** strategy:
+- **Tier 1 (Instant Paint <50ms)**: Preload and decode Frame 1 (`ezgif-frame-001.jpg`) immediately to render the complete hero backdrop on the very first frame.
+- **Tier 2 (Keyframe Stride <300ms)**: Load an initial skeleton of keyframes across the entire scroll timeline (every 5th frame = 48 frames total). This gives instant 100% scrub coverage from top to bottom of the page in under half a second.
+- **Tier 3 (Background Streaming)**: Stream all remaining intermediate frames in small parallel batches.
+- **Nearest-Frame Fallback Interpolation (`getClosestLoadedBitmap`)**: If the user scrolls to a frame index before that specific image completes downloading, the engine instantly draws the closest loaded keyframe rather than stalling, dropping frames, or flashing blank.
+- **GPU ImageBitmaps & DPR Capping**: Frames are converted to GPU-resident `ImageBitmap` formats. Canvas device pixel ratio is capped at `1.5` to ensure ultra-smooth 60fps compositing on high-DPI and mobile displays.
 
 ### 2. Native Smooth Scroll & Composite Rendering
 Scroll scrub behaviors use browser-native passive scroll listeners with zero external momentum dependencies:

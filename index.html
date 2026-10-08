@@ -15,27 +15,32 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://velmori-gifts.netlify.app/" />
+    <meta property="og:url" content="https://khushisarda156.github.io/velmori-gifts/" />
     <meta property="og:title" content="Velmori Gifts — Handcrafted Gifts, Made with Love" />
     <meta property="og:description" content="Premium handcrafted gift hampers, pipe cleaner bouquets, jewellery sets & more by Ruchita Tawade. Personalised gifts for every occasion." />
-    <meta property="og:image" content="https://velmori-gifts.netlify.app/images/logo.png" />
+    <meta property="og:image" content="https://khushisarda156.github.io/velmori-gifts/images/logo.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://velmori-gifts.netlify.app/" />
+    <meta property="twitter:url" content="https://khushisarda156.github.io/velmori-gifts/" />
     <meta property="twitter:title" content="Velmori Gifts — Handcrafted Gifts, Made with Love" />
     <meta property="twitter:description" content="Premium handcrafted gift hampers, pipe cleaner bouquets, jewellery sets & more by Ruchita Tawade. Personalised gifts for every occasion." />
-    <meta property="twitter:image" content="https://velmori-gifts.netlify.app/images/logo.png" />
+    <meta property="twitter:image" content="https://khushisarda156.github.io/velmori-gifts/images/logo.png" />
 
-    <link rel="canonical" href="https://velmori-gifts.netlify.app/" />
+    <link rel="canonical" href="https://khushisarda156.github.io/velmori-gifts/" />
+
+    <!-- Critical Resource Preload for Instant First Paint -->
+    <link rel="preload" as="image" href="frames/ezgif-frame-001.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="images/logo.png" />
 
     <!-- Google Fonts Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Lato:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
+
     <style>
       *,
       *::before,
@@ -46,13 +51,19 @@
       }
 
       :root {
-        --blush: #f5d5c8;
-        --cream: #fdf6f0;
+        --blush: #f7ded4;
+        --cream: #fdf8f5;
         --gold: #a57c65;
         --gold2: #c49f8c;
+        --gold-accent: #d4a373;
         --rose: #b56070;
-        --taupe: #8b7b6b;
-        --dark: #3d2b2b;
+        --rose-dark: #8c3b4b;
+        --taupe: #705f52;
+        --dark: #2c1d1d;
+        --dark-muted: #574343;
+        --glass-bg: rgba(255, 255, 255, 0.62);
+        --glass-border: rgba(255, 255, 255, 0.75);
+        --glass-shadow: 0 12px 36px -10px rgba(61, 43, 43, 0.12);
       }
 
       html {
@@ -60,15 +71,16 @@
       }
 
       body {
-        font-family: "Lato", sans-serif;
-        background: #1a0f0f;
+        font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: var(--cream);
         color: var(--dark);
         overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
       }
 
       /* ══════════════════════════════════════════════
-   FRAME CANVAS — Full viewport fixed background
-══════════════════════════════════════════════ */
+         FRAME CANVAS — High-Performance Background
+      ══════════════════════════════════════════════ */
       #frame-canvas {
         position: fixed;
         top: 0;
@@ -77,24 +89,20 @@
         height: 100vh;
         z-index: 0;
         pointer-events: none;
-        opacity: 0;
-        transition: opacity 1.2s ease;
-        will-change: opacity;
-        /* Match the frame edge color so no black strips appear */
         background: #eee9e4;
+        transform: translateZ(0);
+        will-change: transform;
       }
-      #frame-canvas.ready {
-        opacity: 1;
-      }
+
       @media (max-width: 768px) {
-        #frame-canvas.ready {
-          opacity: 0.35;
+        #frame-canvas {
+          opacity: 0.85;
         }
       }
 
       /* ══════════════════════════════════════════════
-   PETALS
-══════════════════════════════════════════════ */
+         PETALS CANVAS
+      ══════════════════════════════════════════════ */
       #petals-canvas {
         position: fixed;
         top: 0;
@@ -103,134 +111,118 @@
         height: 100%;
         pointer-events: none;
         z-index: 1;
-        opacity: 0.3;
+        opacity: 0.35;
       }
 
       /* ══════════════════════════════════════════════
-   NAV
-══════════════════════════════════════════════ */
+         NAVBAR
+      ══════════════════════════════════════════════ */
       nav {
         position: fixed;
         top: 0;
         width: 100%;
         z-index: 500;
-        padding: 20px 36px;
+        padding: 18px 40px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: transparent;
-        transition:
-          background 0.5s,
-          backdrop-filter 0.5s;
+        background: rgba(253, 248, 245, 0.7);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+        transition: background 0.4s ease, box-shadow 0.4s ease;
       }
+
       .nav-logo {
         font-family: "Cinzel", serif;
-        font-size: 21px;
+        font-size: 20px;
         font-weight: 600;
-        color: #fff;
-        letter-spacing: 5px;
+        color: var(--dark);
+        letter-spacing: 4px;
         display: flex;
         align-items: center;
         gap: 12px;
-        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
       }
+
       .nav-logo span {
         font-family: "Cormorant Garamond", serif;
         font-style: italic;
         font-weight: 400;
         text-transform: lowercase;
-        font-size: 24px;
-        color: var(--gold2);
+        font-size: 23px;
+        color: var(--rose);
         letter-spacing: 1px;
         margin-left: -2px;
       }
-      /* Reusable logo circle — used in nav and footer */
+
       .logo-img-circle {
-        width: 32px;
-        height: 32px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
         overflow: hidden;
-        border: 1.5px solid rgba(201, 168, 76, 0.4);
+        border: 1.5px solid rgba(201, 168, 76, 0.5);
         background: #fff9f6;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       }
+
       .logo-img-circle img {
         width: 106%;
         height: 106%;
         object-fit: cover;
       }
+
       .nav-cta {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 8px;
         padding: 10px 22px;
-        background: linear-gradient(
-          135deg,
-          rgba(37, 211, 102, 0.8),
-          rgba(18, 140, 126, 0.8)
-        );
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        background: linear-gradient(135deg, #25d366, #128c7e);
         color: #fff;
         text-decoration: none;
         border-radius: 50px;
         font-size: 13px;
         font-weight: 700;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow:
-          0 4px 20px rgba(37, 211, 102, 0.2),
-          0 1px 0 0 rgba(255, 255, 255, 0.2) inset;
-        transition: all 0.3s;
+        letter-spacing: 0.3px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
+
       .nav-cta:hover {
         transform: translateY(-2px);
-        background: linear-gradient(
-          135deg,
-          rgba(37, 211, 102, 0.95),
-          rgba(18, 140, 126, 0.95)
-        );
-        box-shadow:
-          0 8px 28px rgba(37, 211, 102, 0.35),
-          0 1px 0 0 rgba(255, 255, 255, 0.3) inset;
+        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
       }
 
       /* ══════════════════════════════════════════════
-   HERO SCROLL SCENE
-   This is a tall section that pins the hero
-   and plays the frame animation on scroll.
-   Height = 5 × viewport = ~40% of total page
-══════════════════════════════════════════════ */
-      #hero-scene {
-        position: relative;
-        min-height: 100vh;
-      }
-
-      /* The hero section wrapper that scrolls naturally */
+         HERO SECTION
+      ══════════════════════════════════════════════ */
       #hero-sticky {
         position: relative;
         width: 100%;
         min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         z-index: 10;
         overflow: hidden;
+        padding: 100px 20px 60px 20px;
       }
 
-      /* Minimal overlay — text shadows do the heavy lifting */
       #hero-sticky::before {
         content: "";
         position: absolute;
         inset: 0;
         background: radial-gradient(
           ellipse 80% 70% at 50% 50%,
-          rgba(0, 0, 0, 0.06) 0%,
-          rgba(0, 0, 0, 0.02) 40%,
-          rgba(0, 0, 0, 0.1) 100%
+          rgba(253, 248, 245, 0.35) 0%,
+          rgba(253, 248, 245, 0.15) 50%,
+          rgba(238, 233, 228, 0.4) 100%
         );
         z-index: 0;
         pointer-events: none;
@@ -243,48 +235,45 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
-        max-width: 680px;
-        padding: 0 24px;
+        max-width: 720px;
+        padding: 0 16px;
       }
 
-      /* Badge */
+      /* Badge with soft glow */
       .badge-wrap {
         position: relative;
-        margin-bottom: 28px;
+        margin-bottom: 24px;
       }
+
       .badge-glow {
         position: absolute;
-        inset: -20px;
+        inset: -18px;
         border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          rgba(201, 168, 76, 0.35) 0%,
-          transparent 70%
-        );
-        animation: pulse 3s ease-in-out infinite;
+        background: radial-gradient(circle, rgba(201, 168, 76, 0.35) 0%, transparent 70%);
+        animation: pulse 3.5s ease-in-out infinite;
       }
+
       @keyframes pulse {
-        0%,
-        100% {
+        0%, 100% {
           transform: scale(1);
           opacity: 0.5;
         }
         50% {
-          transform: scale(1.15);
-          opacity: 1;
+          transform: scale(1.12);
+          opacity: 0.9;
         }
       }
 
       .badge {
-        width: 120px;
-        height: 120px;
+        width: 110px;
+        height: 110px;
         border-radius: 50%;
         background: rgba(255, 249, 246, 0.95);
         backdrop-filter: blur(10px);
-        border: 2.5px solid rgba(201, 168, 76, 0.9);
+        border: 2px solid rgba(201, 168, 76, 0.85);
         box-shadow:
-          0 0 0 8px rgba(201, 168, 76, 0.1),
-          0 16px 60px rgba(0, 0, 0, 0.45),
+          0 0 0 6px rgba(201, 168, 76, 0.12),
+          0 16px 48px rgba(61, 43, 43, 0.18),
           inset 0 1px 0 rgba(255, 255, 255, 0.9);
         display: flex;
         align-items: center;
@@ -293,39 +282,33 @@
         animation: float 6s ease-in-out infinite;
         overflow: hidden;
       }
+
       @keyframes float {
-        0%,
-        100% {
+        0%, 100% {
           transform: translateY(0);
         }
         50% {
-          transform: translateY(-10px);
+          transform: translateY(-8px);
         }
       }
-      .badge::after {
-        content: "";
-        position: absolute;
-        inset: 6px;
-        border-radius: 50%;
-        border: 1px solid rgba(201, 168, 76, 0.2);
-        pointer-events: none;
-      }
+
       .badge img {
-        width: 108%;
-        height: 108%;
+        width: 106%;
+        height: 106%;
         object-fit: cover;
       }
 
       /* Sparkles */
       .sparkle {
         position: absolute;
-        width: 5px;
-        height: 5px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background: var(--gold2);
         opacity: 0;
-        animation: sparkle-anim 2s ease-in-out infinite;
+        animation: sparkle-anim 2.5s ease-in-out infinite;
       }
+
       .sparkle::before,
       .sparkle::after {
         content: "";
@@ -333,16 +316,17 @@
         top: 50%;
         left: 50%;
         width: 1px;
-        height: 10px;
+        height: 12px;
         background: var(--gold2);
         transform: translate(-50%, -50%);
       }
+
       .sparkle::after {
         transform: translate(-50%, -50%) rotate(90deg);
       }
+
       @keyframes sparkle-anim {
-        0%,
-        100% {
+        0%, 100% {
           opacity: 0;
           transform: scale(0);
         }
@@ -351,93 +335,50 @@
           transform: scale(1);
         }
       }
-      .sp1 {
-        top: -14px;
-        right: 18px;
-        animation-delay: 0s;
-      }
-      .sp2 {
-        top: 28px;
-        right: -14px;
-        animation-delay: 0.7s;
-      }
-      .sp3 {
-        bottom: 18px;
-        right: -8px;
-        animation-delay: 1.4s;
-      }
-      .sp4 {
-        top: 8px;
-        left: -10px;
-        animation-delay: 0.4s;
-      }
-      .sp5 {
-        bottom: -8px;
-        left: 28px;
-        animation-delay: 1.1s;
-      }
 
-      /* Hero text — readable on transparent bg */
-      .hero-eyebrow {
-        font-size: 14px;
-        letter-spacing: 7px;
-        text-transform: uppercase;
-        color: var(--gold);
-        margin-bottom: 16px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .hero-eyebrow::before,
-      .hero-eyebrow::after {
-        content: "";
-        display: block;
-        width: 28px;
-        height: 1px;
-        background: var(--gold);
-        opacity: 0.7;
-      }
+      .sp1 { top: -10px; right: 14px; animation-delay: 0s; }
+      .sp2 { top: 28px; right: -12px; animation-delay: 0.8s; }
+      .sp3 { bottom: 14px; right: -6px; animation-delay: 1.6s; }
+      .sp4 { top: 8px; left: -10px; animation-delay: 0.4s; }
+      .sp5 { bottom: -6px; left: 24px; animation-delay: 1.2s; }
 
       .hero-title {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(42px, 8vw, 86px);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(38px, 6.5vw, 68px);
         font-weight: 600;
-        line-height: 1;
+        line-height: 1.12;
         color: var(--dark);
         margin-bottom: 18px;
-        letter-spacing: -1px;
-        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+        letter-spacing: -0.5px;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
       }
+
       .hero-title em {
         font-style: italic;
         color: var(--rose);
         position: relative;
         display: inline-block;
+        padding-bottom: 2px;
       }
+
       .hero-title em::after {
         content: "";
         position: absolute;
-        bottom: -3px;
-        left: 0;
-        right: 0;
+        bottom: 0px;
+        left: 4px;
+        right: 4px;
         height: 2px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          var(--rose),
-          transparent
-        );
+        background: linear-gradient(90deg, transparent, var(--rose), transparent);
       }
 
       .hero-sub {
         font-size: 18px;
         font-weight: 400;
-        color: #5a4b4b;
-        line-height: 1.85;
+        color: var(--dark-muted);
+        line-height: 1.75;
         margin-bottom: 32px;
-        max-width: 400px;
-        letter-spacing: 0.3px;
+        max-width: 520px;
+        letter-spacing: 0.2px;
       }
 
       .hero-btns {
@@ -448,72 +389,56 @@
       }
 
       .btn-wa {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 18px 32px;
-        background: linear-gradient(
-          135deg,
-          rgba(37, 211, 102, 0.8),
-          rgba(18, 140, 126, 0.8)
-        );
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        padding: 16px 34px;
+        background: linear-gradient(135deg, #25d366, #128c7e);
         color: #fff;
         text-decoration: none;
         border-radius: 50px;
         font-size: 15px;
         font-weight: 700;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow:
-          0 8px 36px rgba(37, 211, 102, 0.25),
-          0 1px 0 0 rgba(255, 255, 255, 0.2) inset;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         letter-spacing: 0.3px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       }
+
       .btn-wa:hover {
-        transform: translateY(-4px);
-        background: linear-gradient(
-          135deg,
-          rgba(37, 211, 102, 0.95),
-          rgba(18, 140, 126, 0.95)
-        );
-        box-shadow:
-          0 16px 48px rgba(37, 211, 102, 0.4),
-          0 1px 0 0 rgba(255, 255, 255, 0.3) inset;
+        transform: translateY(-3px);
+        box-shadow: 0 14px 40px rgba(37, 211, 102, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
       }
 
       .btn-ghost {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 18px 32px;
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        color: rgba(255, 255, 255, 0.9);
+        padding: 16px 30px;
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        color: var(--dark);
         text-decoration: none;
         border-radius: 50px;
         font-size: 15px;
         font-weight: 600;
-        border: 1.5px solid rgba(201, 168, 76, 0.35);
-        box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05) inset;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        letter-spacing: 0.3px;
-      }
-      .btn-ghost:hover {
-        background: rgba(201, 168, 76, 0.12);
-        border-color: var(--gold2);
-        transform: translateY(-4px);
-        box-shadow:
-          0 12px 32px rgba(201, 168, 76, 0.15),
-          0 1px 0 0 rgba(255, 255, 255, 0.1) inset;
+        border: 1.5px solid rgba(201, 168, 76, 0.4);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, border-color 0.3s ease;
       }
 
-      /* Scroll hint */
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: var(--gold);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 24px rgba(201, 168, 76, 0.15);
+      }
+
+      /* Scroll Hint */
       .scroll-hint {
         position: absolute;
-        bottom: 36px;
+        bottom: 30px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 3;
@@ -521,21 +446,25 @@
         flex-direction: column;
         align-items: center;
         gap: 8px;
-        opacity: 0.7;
+        opacity: 0.75;
+        transition: opacity 0.4s ease;
       }
+
       .scroll-hint span {
-        font-size: 12px;
-        letter-spacing: 5px;
+        font-size: 11px;
+        letter-spacing: 4px;
         text-transform: uppercase;
-        color: var(--gold2);
+        color: var(--gold);
         font-weight: 700;
       }
+
       .scroll-line {
         width: 1px;
-        height: 48px;
-        background: linear-gradient(180deg, var(--gold2), transparent);
-        animation: scrollLine 1.8s ease-in-out infinite;
+        height: 40px;
+        background: linear-gradient(180deg, var(--gold), transparent);
+        animation: scrollLine 2s ease-in-out infinite;
       }
+
       @keyframes scrollLine {
         0% {
           opacity: 0;
@@ -559,62 +488,61 @@
         top: 0;
         left: 0;
         width: 0%;
-        height: 2px;
+        height: 3px;
         background: linear-gradient(90deg, var(--rose), var(--gold), var(--gold2));
         z-index: 600;
-        transition: width 0.1s linear;
-        box-shadow: 0 0 12px rgba(201, 168, 76, 0.5);
+        transition: width 0.08s linear;
       }
 
       /* ══════════════════════════════════════════════
-   MARQUEE — runs during animation period
-══════════════════════════════════════════════ */
+         MARQUEE STRIP
+      ══════════════════════════════════════════════ */
       .marquee-strip {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        background: rgba(253, 246, 240, 0.85);
-        backdrop-filter: blur(12px);
-        padding: 14px 0;
+        background: rgba(253, 248, 245, 0.88);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        padding: 12px 0;
         overflow: hidden;
         z-index: 20;
-        border-top: 1px solid rgba(201, 168, 76, 0.15);
+        border-top: 1px solid rgba(201, 168, 76, 0.2);
         opacity: 0;
         transform: translateY(100%);
-        transition:
-          opacity 0.6s,
-          transform 0.6s;
+        transition: opacity 0.5s ease, transform 0.5s ease;
       }
+
       .marquee-strip.visible {
         opacity: 1;
         transform: translateY(0);
       }
+
       .marquee-track {
         display: flex;
         width: max-content;
-        animation: marquee 22s linear infinite;
+        animation: marquee 25s linear infinite;
       }
+
       @keyframes marquee {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(-50%);
-        }
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
       }
+
       .marquee-item {
-        padding: 0 36px;
-        font-size: 14px;
-        letter-spacing: 5px;
+        padding: 0 32px;
+        font-size: 13px;
+        letter-spacing: 4px;
         text-transform: uppercase;
         color: var(--dark);
         white-space: nowrap;
         display: flex;
         align-items: center;
-        gap: 18px;
+        gap: 16px;
         font-weight: 700;
       }
+
       .marquee-dot {
         width: 4px;
         height: 4px;
@@ -623,48 +551,50 @@
       }
 
       /* ══════════════════════════════════════════════
-   POST-ANIMATION SECTIONS
-   These appear AFTER the scroll animation ends
-══════════════════════════════════════════════ */
+         POST-ANIMATION SECTIONS
+      ══════════════════════════════════════════════ */
       #post-animation {
         position: relative;
         z-index: 30;
         background: transparent;
-        opacity: 1;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 56px;
+      }
+
+      .section-label {
+        font-size: 13px;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 12px;
+        font-weight: 700;
+        display: block;
+      }
+
+      .section-title {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(32px, 4.5vw, 52px);
+        font-weight: 600;
+        line-height: 1.15;
+        color: var(--dark);
+      }
+
+      .section-title em {
+        font-style: italic;
+        color: var(--rose);
       }
 
       /* ── PRODUCTS ── */
       .products {
-        padding: 100px 24px;
-        background: transparent;
+        padding: 90px 24px;
       }
+
       .products-inner {
-        max-width: 1100px;
+        max-width: 1140px;
         margin: 0 auto;
-      }
-      .section-header {
-        text-align: center;
-        margin-bottom: 64px;
-      }
-      .section-label {
-        font-size: 14px;
-        letter-spacing: 6px;
-        text-transform: uppercase;
-        color: var(--gold);
-        margin-bottom: 14px;
-        font-weight: 700;
-        display: block;
-      }
-      .section-title {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(32px, 5vw, 54px);
-        font-weight: 600;
-        line-height: 1.1;
-        color: var(--dark);
-      }
-      .section-title em {
-        font-style: italic;
-        color: var(--rose);
       }
 
       .products-grid {
@@ -674,140 +604,210 @@
       }
 
       .product-card {
-        border-radius: 28px;
+        border-radius: 24px;
         overflow: hidden;
-        background: rgba(255, 255, 255, 0.45);
-        backdrop-filter: blur(25px) saturate(190%);
-        -webkit-backdrop-filter: blur(25px) saturate(190%);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow:
-          0 10px 30px -10px rgba(61, 43, 43, 0.1),
-          0 1px 1px 0 rgba(255, 255, 255, 0.8) inset;
-        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
       }
+
       .product-card:hover {
-        transform: translateY(-10px) scale(1.02);
-        background: rgba(255, 255, 255, 0.65);
-        border-color: rgba(201, 168, 76, 0.5);
-        box-shadow:
-          0 30px 60px -15px rgba(61, 43, 43, 0.2),
-          0 1px 1px 0 rgba(255, 255, 255, 0.9) inset;
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.85);
+        border-color: rgba(201, 168, 76, 0.45);
+        box-shadow: 0 24px 54px -12px rgba(61, 43, 43, 0.18);
       }
-      .product-card-img {
-        width: 100%;
-        height: 280px;
-        object-fit: cover;
-        display: block;
-        transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      .product-card:hover .product-card-img {
-        transform: scale(1.07);
-      }
+
       .product-img-wrap {
         overflow: hidden;
         position: relative;
+        height: 270px;
+        background: #f5ece5;
       }
+
+      .product-card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .product-card:hover .product-card-img {
+        transform: scale(1.06);
+      }
+
       .product-badge {
         position: absolute;
-        top: 16px;
-        left: 16px;
-        background: var(--gold);
+        top: 14px;
+        left: 14px;
+        background: rgba(165, 124, 101, 0.95);
+        backdrop-filter: blur(8px);
         color: #fff;
-        font-size: 12px;
+        font-size: 11px;
         letter-spacing: 2px;
         text-transform: uppercase;
-        padding: 6px 14px;
+        padding: 5px 12px;
         border-radius: 50px;
         font-weight: 700;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
       }
+
       .product-body {
-        padding: 26px;
+        padding: 24px;
       }
+
       .product-divider {
-        width: 32px;
+        width: 28px;
         height: 2px;
         background: var(--gold);
         margin-bottom: 14px;
       }
+
       .product-name {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 26px;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 25px;
         font-weight: 600;
         color: var(--dark);
         margin-bottom: 8px;
       }
+
       .product-desc {
-        font-size: 16px;
-        color: #5a4b4b;
-        line-height: 1.75;
+        font-size: 15px;
+        color: var(--dark-muted);
+        line-height: 1.7;
       }
 
-      /* ── TESTIMONIALS — compact strip ── */
-      .testimonials {
-        padding: 80px 24px;
-        background: transparent;
-        overflow: hidden;
+      /* ── PROCESS ── */
+      .process {
+        padding: 90px 24px;
       }
-      .testi-inner {
-        max-width: 1100px;
+
+      .process-inner {
+        max-width: 1140px;
         margin: 0 auto;
       }
-      .testi-header {
+
+      .process-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+      }
+
+      .process-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 44px 28px 32px 28px;
         text-align: center;
-        margin-bottom: 52px;
+        box-shadow: var(--glass-shadow);
+        position: relative;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
       }
-      .testi-header .section-title {
-        color: var(--gold2);
+
+      .process-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 48px -10px rgba(61, 43, 43, 0.16);
       }
+
+      .process-step {
+        position: absolute;
+        top: -18px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        border: 2.5px solid var(--cream);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .process-icon-circle {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background: rgba(181, 96, 112, 0.1);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--rose);
+        margin-bottom: 18px;
+      }
+
+      .process-title {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 23px;
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 10px;
+      }
+
+      .process-desc {
+        font-size: 15px;
+        color: var(--dark-muted);
+        line-height: 1.65;
+      }
+
+      /* ── TESTIMONIALS ── */
+      .testimonials {
+        padding: 90px 24px;
+      }
+
+      .testi-inner {
+        max-width: 1140px;
+        margin: 0 auto;
+      }
+
       .testi-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 24px;
       }
+
       .testi-card {
-        background: rgba(255, 255, 255, 0.45);
-        backdrop-filter: blur(25px) saturate(190%);
-        -webkit-backdrop-filter: blur(25px) saturate(190%);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-radius: 24px;
-        padding: 32px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid var(--glass-border);
+        border-radius: 22px;
+        padding: 32px 26px;
         position: relative;
-        box-shadow:
-          0 10px 30px -10px rgba(61, 43, 43, 0.1),
-          0 1px 1px 0 rgba(255, 255, 255, 0.8) inset;
-        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: var(--glass-shadow);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
       }
+
       .testi-card:hover {
-        background: rgba(255, 255, 255, 0.65);
-        border-color: rgba(201, 168, 76, 0.5);
-        transform: translateY(-8px);
-        box-shadow:
-          0 30px 60px -15px rgba(61, 43, 43, 0.2),
-          0 1px 1px 0 rgba(255, 255, 255, 0.9) inset;
+        transform: translateY(-6px);
+        box-shadow: 0 20px 48px -10px rgba(61, 43, 43, 0.16);
       }
-      .testi-card::before {
-        content: "\201C";
-        position: absolute;
-        top: -8px;
-        left: 20px;
-        font-family: "Cormorant Garamond", serif;
-        font-size: 72px;
-        color: rgba(201, 168, 76, 0.3);
-        line-height: 1;
-      }
+
       .testi-stars {
-        color: var(--gold);
+        color: var(--gold-accent);
         font-size: 15px;
         margin-bottom: 14px;
-        letter-spacing: 3px;
+        letter-spacing: 2px;
       }
+
       .testi-text {
-        font-size: 16px;
+        font-size: 15px;
         color: var(--dark);
-        line-height: 1.85;
-        margin-bottom: 18px;
+        line-height: 1.75;
+        margin-bottom: 16px;
         font-style: italic;
       }
+
       .testi-name {
         font-size: 13px;
         font-weight: 700;
@@ -816,142 +816,207 @@
         text-transform: uppercase;
       }
 
-      /* ── CTA SECTION ── */
+      /* ── PHILOSOPHY ── */
+      .philosophy {
+        padding: 90px 24px;
+      }
+
+      .philosophy-inner {
+        max-width: 1140px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 56px;
+      }
+
+      .philosophy-content {
+        flex: 1.2;
+      }
+
+      .philosophy-content .section-label,
+      .philosophy-content .section-title {
+        text-align: left;
+      }
+
+      .philosophy-lead {
+        font-size: 16px;
+        color: var(--dark-muted);
+        line-height: 1.75;
+        margin: 18px 0 28px 0;
+      }
+
+      .philosophy-list {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+
+      .philosophy-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        padding: 16px 20px;
+        border-radius: 18px;
+        border: 1px solid var(--glass-border);
+      }
+
+      .philosophy-item-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(181, 96, 112, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--rose);
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .philosophy-item-text h3 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 21px;
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 4px;
+      }
+
+      .philosophy-item-text p {
+        font-size: 14.5px;
+        color: var(--dark-muted);
+        line-height: 1.6;
+      }
+
+      .philosophy-image-wrap {
+        flex: 0.8;
+        position: relative;
+        border-radius: 28px;
+        overflow: hidden;
+        aspect-ratio: 4/5;
+        box-shadow: 0 20px 48px -12px rgba(61, 43, 43, 0.16);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        background: #f5ece5;
+      }
+
+      .philosophy-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* ── CTA ── */
       .cta {
-        padding: 120px 24px 40px 24px;
-        background: transparent;
+        padding: 100px 24px 60px 24px;
         text-align: center;
         position: relative;
         overflow: hidden;
       }
-      .cta::before {
-        content: "";
-        position: absolute;
-        top: -200px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 700px;
-        height: 700px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          rgba(201, 168, 76, 0.07) 0%,
-          transparent 70%
-        );
-      }
-      .cta::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(
-            circle at 20% 80%,
-            rgba(181, 96, 112, 0.08) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 80% 20%,
-            rgba(201, 168, 76, 0.06) 0%,
-            transparent 50%
-          );
-      }
+
       .cta-inner {
-        max-width: 600px;
+        max-width: 640px;
         margin: 0 auto;
         position: relative;
         z-index: 2;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid var(--glass-border);
+        border-radius: 32px;
+        padding: 48px 32px;
+        box-shadow: var(--glass-shadow);
       }
+
       .cta-eyebrow {
-        font-size: 14px;
-        letter-spacing: 7px;
+        font-size: 13px;
+        letter-spacing: 5px;
         text-transform: uppercase;
         color: var(--gold);
-        margin-bottom: 18px;
+        margin-bottom: 14px;
         font-weight: 700;
       }
+
       .cta-title {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(38px, 6vw, 68px);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(34px, 5vw, 54px);
         font-weight: 600;
         font-style: italic;
         color: var(--dark);
-        margin-bottom: 18px;
-        line-height: 1.05;
+        margin-bottom: 14px;
+        line-height: 1.1;
       }
+
       .cta-sub {
-        font-size: 18px;
-        color: #5a4b4b;
-        line-height: 1.8;
-        margin-bottom: 56px;
+        font-size: 16px;
+        color: var(--dark-muted);
+        line-height: 1.75;
+        margin-bottom: 36px;
         max-width: 480px;
         margin-left: auto;
         margin-right: auto;
       }
+
       .cta-founder {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 18px;
         justify-content: center;
-        margin-bottom: 48px;
-        padding: 28px 36px;
-        background: rgba(255, 255, 255, 0.45);
-        backdrop-filter: blur(25px) saturate(190%);
-        -webkit-backdrop-filter: blur(25px) saturate(190%);
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        margin-bottom: 36px;
+        padding: 20px 28px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.8);
         border-radius: 20px;
-        box-shadow:
-          0 10px 30px -10px rgba(61, 43, 43, 0.1),
-          0 1px 1px 0 rgba(255, 255, 255, 0.8) inset;
-        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
       }
-      .cta-founder:hover {
-        background: rgba(255, 255, 255, 0.65);
-        border-color: rgba(201, 168, 76, 0.5);
-        transform: translateY(-5px);
-        box-shadow:
-          0 30px 60px -15px rgba(61, 43, 43, 0.2),
-          0 1px 0 0 rgba(255, 255, 255, 0.9) inset;
-      }
+
       .cta-avatar {
-        width: 72px;
-        height: 72px;
+        width: 64px;
+        height: 64px;
         border-radius: 50%;
         border: 2px solid rgba(201, 168, 76, 0.5);
         background: #fff9f6;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
         flex-shrink: 0;
         overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
       }
+
       .cta-avatar img {
-        width: 106%;
-        height: 106%;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
       }
+
       .cta-founder-info {
         text-align: left;
       }
+
       .cta-founder-name {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 26px;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 24px;
         color: var(--dark);
-        margin-bottom: 4px;
-        font-weight: 400;
+        margin-bottom: 2px;
+        font-weight: 600;
       }
+
       .cta-founder-role {
-        font-size: 12px;
+        font-size: 11px;
         letter-spacing: 3px;
         text-transform: uppercase;
         color: var(--gold);
         font-weight: 700;
       }
+
       .cta-phone {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 20px;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 18px;
         color: var(--taupe);
-        margin-top: 8px;
+        margin-top: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
       }
 
       .btn-wa-big {
@@ -959,539 +1024,182 @@
         align-items: center;
         justify-content: center;
         gap: 12px;
-        padding: 22px 52px;
-        background: linear-gradient(
-          135deg,
-          rgba(37, 211, 102, 0.8),
-          rgba(18, 140, 126, 0.8)
-        );
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        padding: 18px 44px;
+        background: linear-gradient(135deg, #25d366, #128c7e);
         color: #fff;
         text-decoration: none;
         border-radius: 50px;
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 700;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow:
-          0 12px 48px rgba(37, 211, 102, 0.3),
-          0 1px 0 0 rgba(255, 255, 255, 0.2) inset;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 10px 32px rgba(37, 211, 102, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
         letter-spacing: 0.3px;
         width: 100%;
-        max-width: 400px;
-      }
-      .btn-wa-big:hover {
-        transform: translateY(-5px);
-        background: linear-gradient(
-          135deg,
-          rgba(37, 211, 102, 0.95),
-          rgba(18, 140, 126, 0.95)
-        );
-        box-shadow:
-          0 24px 64px rgba(37, 211, 102, 0.45),
-          0 1px 0 0 rgba(255, 255, 255, 0.3) inset;
+        max-width: 380px;
       }
 
+      .btn-wa-big:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 48px rgba(37, 211, 102, 0.45);
+      }
+
+      /* ── FOOTER ── */
       footer {
-        background: #fdf6f0;
+        background: rgba(253, 248, 245, 0.95);
+        border-top: 1px solid rgba(201, 168, 76, 0.15);
         padding: 44px 24px;
         text-align: center;
       }
+
       .foot-logo-wrap {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 6px;
-        margin-bottom: 16px;
+        margin-bottom: 14px;
       }
-      .foot-logo-wrap .logo-img-circle {
-        width: 48px;
-        height: 48px;
-        border-color: rgba(201, 168, 76, 0.3);
-      }
+
       .foot-logo {
         font-family: "Cinzel", serif;
-        font-size: 21px;
-        color: var(--gold);
-        letter-spacing: 5px;
-        margin-bottom: 8px;
+        font-size: 20px;
+        color: var(--dark);
+        letter-spacing: 4px;
         font-weight: 600;
       }
+
       .foot-logo span {
         font-family: "Cormorant Garamond", serif;
         font-style: italic;
         font-weight: 400;
         text-transform: lowercase;
-        font-size: 24px;
-        color: var(--gold2);
+        font-size: 23px;
+        color: var(--rose);
         letter-spacing: 1px;
         margin-left: -2px;
       }
+
       .foot-sub {
-        font-size: 13px;
-        letter-spacing: 4px;
+        font-size: 12px;
+        letter-spacing: 3px;
         text-transform: uppercase;
         color: var(--taupe);
-        margin-bottom: 16px;
+        margin-bottom: 12px;
         font-weight: 700;
       }
+
       .foot-copy {
-        font-size: 14px;
-        color: rgba(61, 43, 43, 0.85);
+        font-size: 13.5px;
+        color: var(--dark-muted);
       }
 
-      /* ══════════════════════════════════════════════
-   SCROLL REVEAL
-══════════════════════════════════════════════ */
+      /* ── SCROLL REVEAL ── */
       .reveal {
         opacity: 0;
-        transform: translateY(50px) scale(0.96);
-        transition:
-          opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-          transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(36px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       }
+
       .reveal.visible {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
       }
 
-      /* ══════════════════════════════════════════════
-   RESPONSIVE DESIGN
-══════════════════════════════════════════════ */
-
-      /* TABLET */
+      /* ── RESPONSIVENESS ── */
       @media (max-width: 992px) {
-        .products-grid {
+        .products-grid,
+        .testi-grid,
+        .process-grid {
           grid-template-columns: repeat(2, 1fr);
         }
-        .testi-grid {
-          grid-template-columns: repeat(2, 1fr);
+        .philosophy-inner {
+          flex-direction: column-reverse;
+          gap: 40px;
         }
-        nav {
-          padding: 16px 24px;
-        }
-        .section-title {
-          font-size: clamp(28px, 4.5vw, 42px);
-        }
-        .hero-title {
-          font-size: clamp(36px, 7vw, 64px);
-        }
-        .products,
-        .testimonials,
-        .cta {
-          padding-top: 80px;
-          padding-bottom: 80px;
+        .philosophy-image-wrap {
+          width: 100%;
+          max-width: 440px;
         }
       }
 
-      /* MOBILE */
       @media (max-width: 768px) {
-        /* Prevent horizontal overflow */
-        html, body {
-          max-width: 100vw;
-          overflow-x: hidden;
-        }
-
-        /* Stronger hero overlay for text readability on mobile */
-        #hero-sticky::before {
-          background: radial-gradient(
-            ellipse 100% 100% at 50% 50%,
-            rgba(253, 246, 240, 0.55) 0%,
-            rgba(253, 246, 240, 0.3) 50%,
-            rgba(238, 233, 228, 0.45) 100%
-          );
-        }
-
         nav {
-          padding: 12px 16px;
+          padding: 14px 20px;
         }
         .nav-logo {
-          font-size: 15px;
-          letter-spacing: 2px;
-          gap: 8px;
+          font-size: 16px;
+          letter-spacing: 2.5px;
         }
         .nav-logo span {
-          font-size: 17px;
+          font-size: 19px;
         }
-        .nav-logo-img {
-          width: 26px;
-          height: 26px;
-        }
-        .nav-cta {
-          padding: 8px 16px;
-          font-size: 12px;
-        }
-
-        .products-grid {
+        .products-grid,
+        .testi-grid,
+        .process-grid {
           grid-template-columns: 1fr;
         }
-        .testi-grid {
-          grid-template-columns: 1fr;
-        }
-
         .hero-btns {
           flex-direction: column;
-          align-items: center;
           width: 100%;
-          gap: 12px;
+          max-width: 320px;
         }
         .btn-wa,
         .btn-ghost {
           width: 100%;
-          max-width: 100%;
           justify-content: center;
-          padding: 16px 24px;
-          min-height: 52px;
         }
-
         .products,
+        .process,
         .testimonials,
+        .philosophy,
         .cta {
-          padding-left: 16px;
-          padding-right: 16px;
           padding-top: 60px;
           padding-bottom: 60px;
         }
-        .section-header {
-          margin-bottom: 40px;
-        }
-        .testi-card {
-          padding: 24px;
-        }
-
-        .badge {
-          width: 88px;
-          height: 88px;
-        }
-        .badge-wrap {
-          margin-bottom: 20px;
-        }
-
-        .hero-sub {
-          font-size: 16px;
-          max-width: 320px;
-          margin-bottom: 28px;
-        }
-
-        /* Marquee strip — smaller on mobile */
-        .marquee-strip {
-          padding: 10px 0;
-        }
-        .marquee-item {
-          font-size: 12px;
-          letter-spacing: 3px;
-          padding: 0 20px;
-          gap: 12px;
-        }
-
-        /* Philosophy section — add backdrop for readability over flower */
-        .philosophy {
-          padding: 60px 16px;
-        }
-        .philosophy-inner {
-          gap: 36px;
-        }
-        .philosophy-item {
-          background: rgba(253, 246, 240, 0.75);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          padding: 16px 18px;
-          border-radius: 16px;
-          border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        .philosophy-item-text h3 {
-          font-size: 20px;
-        }
-        .philosophy-item-text p {
-          font-size: 14px;
-        }
-
-        /* Process section — tighter on mobile */
-        .process {
-          padding: 60px 16px;
-        }
-        .process-card {
-          padding: 36px 24px;
-        }
-        .process-icon {
-          font-size: 32px;
-        }
-        .process-title {
-          font-size: 21px;
-        }
-
-        /* CTA section — add subtle backdrop */
-        .cta {
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-        .cta-inner {
-          background: rgba(253, 246, 240, 0.5);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          padding: 40px 20px;
-          border-radius: 28px;
-          border: 1px solid rgba(255, 255, 255, 0.35);
-        }
-        .cta-title {
-          font-size: clamp(28px, 7vw, 38px);
-        }
-        .cta-sub {
-          font-size: 15px;
-        }
-        .cta-founder {
-          padding: 20px;
-        }
-        .cta-avatar {
-          width: 60px;
-          height: 60px;
-        }
-        .cta-founder-name {
-          font-size: 22px;
-        }
-        .btn-wa-big {
-          padding: 18px 24px;
-          font-size: 15px;
-          min-height: 52px;
-        }
-
-        /* Footer — tighter on mobile */
-        footer {
-          padding: 32px 16px;
-        }
-        .foot-logo {
-          font-size: 18px;
-          letter-spacing: 4px;
-        }
-        .foot-logo span {
-          font-size: 20px;
-        }
-        .foot-sub {
-          font-size: 11px;
-          letter-spacing: 3px;
-        }
-        .foot-copy {
-          font-size: 12px;
-        }
-      }
-
-      /* SMALL MOBILE */
-      @media (max-width: 480px) {
-        .nav-cta .nav-cta-text {
-          display: none;
-        }
-        .nav-cta {
-          padding: 10px;
-          border-radius: 50%;
-        }
-        .nav-logo {
-          font-size: 14px;
-          letter-spacing: 2px;
-        }
-        .nav-logo span {
-          font-size: 16px;
-        }
-
         .cta-founder {
           flex-direction: column;
           text-align: center;
-          gap: 12px;
           padding: 20px 16px;
         }
         .cta-founder-info {
           text-align: center;
         }
-
-        .hero-title {
-          font-size: clamp(32px, 10vw, 48px);
-        }
-        .hero-sub {
-          font-size: 15px;
-          margin-bottom: 24px;
-        }
-
-        .product-name {
-          font-size: 22px;
-        }
-        .testi-text {
-          font-size: 15px;
-        }
-
-        .badge {
-          width: 76px;
-          height: 76px;
-        }
-      }
-
-      /* ── PROCESS SECTION ── */
-      .process {
-        padding: 100px 24px;
-        background: transparent;
-        position: relative;
-        z-index: 30;
-      }
-      .process-inner {
-        max-width: 1100px;
-        margin: 0 auto;
-      }
-      .process-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 32px;
-        margin-top: 56px;
-      }
-      .process-card {
-        background: rgba(255, 255, 255, 0.45);
-        backdrop-filter: blur(25px) saturate(190%);
-        -webkit-backdrop-filter: blur(25px) saturate(190%);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-radius: 28px;
-        padding: 44px 32px;
-        text-align: center;
-        box-shadow: 0 10px 30px -10px rgba(61, 43, 43, 0.08);
-        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        position: relative;
-      }
-      .process-card:hover {
-        transform: translateY(-8px);
-        background: rgba(255, 255, 255, 0.65);
-        border-color: rgba(201, 168, 76, 0.5);
-        box-shadow: 0 20px 40px -15px rgba(61, 43, 43, 0.15);
-      }
-      .process-step {
-        position: absolute;
-        top: -22px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: var(--gold);
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 14px;
-        border: 3px solid #fdf6f0;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      }
-      .process-icon {
-        font-size: 40px;
-        margin-bottom: 20px;
-        margin-top: 10px;
-      }
-      .process-title {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 24px;
-        font-weight: 600;
-        color: var(--dark);
-        margin-bottom: 12px;
-      }
-      .process-desc {
-        font-size: 15px;
-        color: var(--taupe);
-        line-height: 1.7;
-      }
-
-      /* ── PHILOSOPHY SECTION ── */
-      .philosophy {
-        padding: 100px 24px;
-        background: transparent;
-        position: relative;
-        z-index: 30;
-      }
-      .philosophy-inner {
-        max-width: 1100px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        gap: 64px;
-      }
-      .philosophy-content {
-        flex: 1.2;
-      }
-      .philosophy-list {
-        margin-top: 36px;
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
-      }
-      .philosophy-item {
-        display: flex;
-        gap: 20px;
-      }
-      .philosophy-item-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        background: rgba(201, 168, 76, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--rose);
-        font-size: 20px;
-        flex-shrink: 0;
-      }
-      .philosophy-item-text h3 {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 22px;
-        font-weight: 600;
-        color: var(--dark);
-        margin-bottom: 6px;
-      }
-      .philosophy-item-text p {
-        font-size: 15px;
-        color: var(--taupe);
-        line-height: 1.65;
-      }
-      .philosophy-image-wrap {
-        flex: 0.8;
-        position: relative;
-        border-radius: 36px;
-        overflow: hidden;
-        aspect-ratio: 4/5;
-        box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-      }
-      .philosophy-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      @media (max-width: 992px) {
-        .process-grid {
-          grid-template-columns: 1fr;
-          gap: 40px;
-          margin-top: 48px;
-        }
-        .philosophy-inner {
-          flex-direction: column-reverse;
-          gap: 48px;
-        }
-        .philosophy-image-wrap {
-          width: 100%;
-          max-width: 400px;
-        }
-      }
-
-      /* Philosophy text alignment — avoids inline style= overrides */
-      .philosophy .section-label,
-      .philosophy .section-title {
-        text-align: left;
-      }
-      .philosophy .section-title {
-        margin-bottom: 24px;
       }
     </style>
 
-    <!-- WhatsApp icon defined once, referenced 3× below -->
+    <!-- Bespoke SVG Icon Definitions -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
       <symbol id="icon-wa" viewBox="0 0 24 24" fill="currentColor">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
         <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.522 5.849L.057 23.882a.5.5 0 0 0 .613.613l6.085-1.457A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.945 9.945 0 0 1-5.127-1.424l-.367-.218-3.802.912.928-3.748-.24-.386A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+      </symbol>
+      <symbol id="icon-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </symbol>
+      <symbol id="icon-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+      </symbol>
+      <symbol id="icon-flower" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V12m4.5 0a4.5 4.5 0 1 1-4.5 4.5M16.5 12H12m-4.5 0a4.5 4.5 0 1 0 4.5 4.5M7.5 12H12m0 4.5V21"/>
+      </symbol>
+      <symbol id="icon-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="8" width="18" height="13" rx="2"/>
+        <path d="M12 8v13"/>
+        <path d="M19 12H3"/>
+        <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 4.8 0 0 1 12 8a4.8 4.8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+      </symbol>
+      <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+      </symbol>
+      <symbol id="icon-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+        <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+        <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+        <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+      </symbol>
+      <symbol id="icon-infinity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.356-8-5.096 0-5.096 8 0 8 5.223 0 7.261-8 12.356-8Z"/>
       </symbol>
     </svg>
   </head>
@@ -1499,16 +1207,16 @@
     <!-- SCROLL PROGRESS BAR -->
     <div id="scroll-progress"></div>
 
-    <!-- FRAME CANVAS - fixed, full screen, behind everything -->
+    <!-- FRAME CANVAS (Full screen background, GPU-driven) -->
     <canvas id="frame-canvas"></canvas>
 
-    <!-- PETALS -->
+    <!-- PETALS CANVAS -->
     <canvas id="petals-canvas"></canvas>
 
-    <!-- NAV -->
+    <!-- NAVBAR -->
     <nav id="main-nav">
       <div class="nav-logo">
-        <div class="logo-img-circle"><img src="images/logo.png" alt="VG" /></div>
+        <div class="logo-img-circle"><img src="images/logo.png" alt="Velmori Gifts Logo" /></div>
         VELMORI <span>Gifts</span>
       </div>
       <a
@@ -1516,80 +1224,35 @@
         class="nav-cta"
         target="_blank"
       >
-        <svg width="16" height="16"><use href="#icon-wa"/></svg>
-        <span class="nav-cta-text">Order Now</span>
+        <svg width="15" height="15"><use href="#icon-wa"/></svg>
+        <span>Order Now</span>
       </a>
     </nav>
 
-    <!-- MARQUEE (fixed at bottom during animation) -->
+    <!-- MARQUEE RIBBON -->
     <div class="marquee-strip" id="marquee">
       <div class="marquee-track">
-        <div class="marquee-item">
-          Gift Hampers
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Handmade Bouquets
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Jewellery Sets
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Hair Accessories
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Pipe Cleaner Flowers
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Custom Orders
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Made with Love
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Gift Hampers
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Handmade Bouquets
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Jewellery Sets
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Hair Accessories
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Pipe Cleaner Flowers
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Custom Orders
-          <div class="marquee-dot"></div>
-        </div>
-        <div class="marquee-item">
-          Made with Love
-          <div class="marquee-dot"></div>
-        </div>
+        <div class="marquee-item">Gift Hampers <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Handmade Bouquets <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Jewellery Sets <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Hair Accessories <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Pipe Cleaner Flowers <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Custom Orders <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Made with Love <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Gift Hampers <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Handmade Bouquets <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Jewellery Sets <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Hair Accessories <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Pipe Cleaner Flowers <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Custom Orders <div class="marquee-dot"></div></div>
+        <div class="marquee-item">Made with Love <div class="marquee-dot"></div></div>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-     HERO SCENE — sticky pinned scroll zone
-     Height 500vh = frame animation plays here
-═══════════════════════════════════════ -->
+    <!-- HERO SECTION -->
     <div id="hero-sticky">
       <div class="hero-inner">
-        <!-- Brand badge -->
+        <!-- Brand Badge -->
         <div class="badge-wrap">
           <div class="badge-glow"></div>
           <div class="badge">
@@ -1602,42 +1265,42 @@
           <div class="sparkle sp5"></div>
         </div>
 
-        <!-- Text -->
+        <!-- Typography -->
         <h1 class="hero-title">
           Because every<br /><em>gift</em> tells a story
         </h1>
         <p class="hero-sub">
-          Curated hampers, handmade bouquets &amp; jewellery — crafted with
+          Curated hampers, handmade bouquets &amp; bespoke jewellery — crafted with
           love for the people who matter most.
         </p>
 
-        <!-- CTAs -->
+        <!-- Call to Actions -->
         <div class="hero-btns">
           <a
             href="https://wa.me/919356664679?text=Hi%20Ruchita!%20I%20saw%20Velmori%20Gifts%20and%20I'd%20love%20to%20place%20an%20order%20%F0%9F%8E%81"
             class="btn-wa"
             target="_blank"
           >
-            <svg width="20" height="20"><use href="#icon-wa"/></svg>
+            <svg width="18" height="18"><use href="#icon-wa"/></svg>
             Order on WhatsApp
           </a>
-          <a href="tel:+919356664679" class="btn-ghost">📞 +91 93566 64679</a>
+          <a href="tel:+919356664679" class="btn-ghost">
+            <svg width="16" height="16"><use href="#icon-phone"/></svg>
+            +91 93566 64679
+          </a>
         </div>
       </div>
 
-      <!-- Scroll hint (fades as user scrolls) -->
+      <!-- Scroll Hint -->
       <div class="scroll-hint" id="scroll-hint">
         <span>scroll</span>
         <div class="scroll-line"></div>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-     POST-ANIMATION CONTENT
-     Revealed only after scroll animation ends
-═══════════════════════════════════════ -->
+    <!-- POST-ANIMATION CONTENT -->
     <div id="post-animation">
-      <!-- PRODUCTS -->
+      <!-- PRODUCTS COLLECTION -->
       <section class="products">
         <div class="products-inner">
           <div class="section-header reveal">
@@ -1655,16 +1318,13 @@
                   decoding="async"
                   src="images/birthday_hamper.jpeg"
                   alt="Birthday Hamper"
-                  onerror="
-                    this.parentElement.style.background =
-                      'linear-gradient(145deg,#f5d5c8,#fce8d8)'
-                  "
+                  onerror="this.parentElement.style.background='linear-gradient(145deg,#f7ded4,#fce8d8)'"
                 />
                 <div class="product-badge">Best Seller</div>
               </div>
               <div class="product-body">
                 <div class="product-divider"></div>
-                <p class="product-name">Birthday Hampers</p>
+                <h3 class="product-name">Birthday Hampers</h3>
                 <p class="product-desc">
                   Custom boxes filled with jewellery, accessories, chocolates,
                   and premium floral touches crafted for their special day.
@@ -1680,19 +1340,16 @@
                   decoding="async"
                   src="images/apology_hamper.jpeg"
                   alt="Apology Hamper"
-                  onerror="
-                    this.parentElement.style.background =
-                      'linear-gradient(145deg,#f5d5c8,#fce8d8)'
-                  "
+                  onerror="this.parentElement.style.background='linear-gradient(145deg,#f7ded4,#fce8d8)'"
                 />
                 <div class="product-badge">Made with Love</div>
               </div>
               <div class="product-body">
                 <div class="product-divider"></div>
-                <p class="product-name">Apology Hampers</p>
+                <h3 class="product-name">Apology Hampers</h3>
                 <p class="product-desc">
                   A thoughtful 'I'm Sorry' box with scrunchies, bows, and a
-                  personalized tag that speaks from the heart.
+                  personalized tag that speaks straight from the heart.
                 </p>
               </div>
             </div>
@@ -1705,19 +1362,16 @@
                   decoding="async"
                   src="images/bouque_pipe_cleaner.jpeg"
                   alt="Pipe Cleaner Bouquet"
-                  onerror="
-                    this.parentElement.style.background =
-                      'linear-gradient(145deg,#f5d5c8,#fce8d8)'
-                  "
+                  onerror="this.parentElement.style.background='linear-gradient(145deg,#f7ded4,#fce8d8)'"
                 />
                 <div class="product-badge">Handmade</div>
               </div>
               <div class="product-body">
                 <div class="product-divider"></div>
-                <p class="product-name">Pipe Cleaner Bouquets</p>
+                <h3 class="product-name">Pipe Cleaner Bouquets</h3>
                 <p class="product-desc">
                   Realistic chenille roses that last forever — ribbon-wrapped
-                  keepsakes that never wilt or fade.
+                  keepsakes that never wilt, fade, or lose their charm.
                 </p>
               </div>
             </div>
@@ -1737,7 +1391,9 @@
           <div class="process-grid">
             <div class="process-card reveal">
               <div class="process-step">1</div>
-              <div class="process-icon">✨</div>
+              <div class="process-icon-circle">
+                <svg width="26" height="26"><use href="#icon-sparkle"/></svg>
+              </div>
               <h3 class="process-title">Thoughtful Curation</h3>
               <p class="process-desc">
                 We hand-select premium chocolates, custom accessories, and beautiful details tailored to match the perfect theme for your loved one.
@@ -1745,7 +1401,9 @@
             </div>
             <div class="process-card reveal">
               <div class="process-step">2</div>
-              <div class="process-icon">🌸</div>
+              <div class="process-icon-circle">
+                <svg width="26" height="26"><use href="#icon-flower"/></svg>
+              </div>
               <h3 class="process-title">Artisanal Handcrafting</h3>
               <p class="process-desc">
                 From shaping realistic pipe-cleaner roses to handwriting custom note cards, every item is meticulously crafted to perfection.
@@ -1753,7 +1411,9 @@
             </div>
             <div class="process-card reveal">
               <div class="process-step">3</div>
-              <div class="process-icon">🎁</div>
+              <div class="process-icon-circle">
+                <svg width="26" height="26"><use href="#icon-gift"/></svg>
+              </div>
               <h3 class="process-title">Luxury Presentation</h3>
               <p class="process-desc">
                 Wrapped with premium satin ribbons, personalized tags, and delicate floral toppings to create an unforgettable unboxing experience.
@@ -1766,7 +1426,7 @@
       <!-- TESTIMONIALS -->
       <section class="testimonials">
         <div class="testi-inner">
-          <div class="testi-header reveal">
+          <div class="testi-header section-header reveal">
             <span class="section-label">Happy Customers</span>
             <h2 class="section-title">
               Words from our <em>lovely people</em>
@@ -1776,29 +1436,29 @@
             <div class="testi-card reveal">
               <div class="testi-stars">★★★★★</div>
               <p class="testi-text">
-                Ordered a hamper for my best friend's birthday and she
+                &ldquo;Ordered a hamper for my best friend&rsquo;s birthday and she
                 absolutely loved it! Every single item was so thoughtfully
-                picked. Will definitely order again!
+                picked. Will definitely order again!&rdquo;
               </p>
-              <p class="testi-name">— Priya S.</p>
+              <p class="testi-name">&mdash; Priya S.</p>
             </div>
             <div class="testi-card reveal">
               <div class="testi-stars">★★★★★</div>
               <p class="testi-text">
-                The pipe cleaner roses are SO beautiful. I gifted them to my
-                sister and she cried! The packaging was also so pretty — felt
-                like a luxury gift.
+                &ldquo;The pipe cleaner roses are SO beautiful. I gifted them to my
+                sister and she cried! The packaging was also so pretty &mdash; felt
+                like a true luxury gift.&rdquo;
               </p>
-              <p class="testi-name">— Neha M.</p>
+              <p class="testi-name">&mdash; Neha M.</p>
             </div>
             <div class="testi-card reveal">
               <div class="testi-stars">★★★★★</div>
               <p class="testi-text">
-                Ruchita put together the most adorable apology gift box. My
-                friend forgave me instantly the personal tag made it extra
-                special.Absolutely loved it!
+                &ldquo;Ruchita put together the most adorable apology gift box. My
+                friend forgave me instantly! The personal tag made it extra
+                special. Absolutely loved it!&rdquo;
               </p>
-              <p class="testi-name">— Anjali R.</p>
+              <p class="testi-name">&mdash; Anjali R.</p>
             </div>
           </div>
         </div>
@@ -1812,28 +1472,34 @@
             <h2 class="section-title">
               Gifts meant to be <em>cherished forever</em>
             </h2>
-            <p class="process-desc" style="font-size: 16px; margin-bottom: 20px;">
+            <p class="philosophy-lead">
               At Velmori Gifts, we believe a gift shouldn't just be an item — it should be a physical manifestation of a beautiful relationship, wrapped with thoughtfulness.
             </p>
             <div class="philosophy-list">
               <div class="philosophy-item">
-                <div class="philosophy-item-icon">💝</div>
+                <div class="philosophy-item-icon">
+                  <svg width="22" height="22"><use href="#icon-heart"/></svg>
+                </div>
                 <div class="philosophy-item-text">
                   <h3>100% Handcrafted</h3>
                   <p>No mass production. Every bouquet and accessory is made individually by Ruchita, giving it a unique personal soul.</p>
                 </div>
               </div>
               <div class="philosophy-item">
-                <div class="philosophy-item-icon">🎨</div>
+                <div class="philosophy-item-icon">
+                  <svg width="22" height="22"><use href="#icon-palette"/></svg>
+                </div>
                 <div class="philosophy-item-text">
-                  <h3>Tailored customisation</h3>
+                  <h3>Tailored Customisation</h3>
                   <p>Add specific colors, unique tag requests, or choose custom items to construct a box that fits their exact personality.</p>
                 </div>
               </div>
               <div class="philosophy-item">
-                <div class="philosophy-item-icon">♾️</div>
+                <div class="philosophy-item-icon">
+                  <svg width="22" height="22"><use href="#icon-infinity"/></svg>
+                </div>
                 <div class="philosophy-item-text">
-                  <h3>Everlasting keepsakes</h3>
+                  <h3>Everlasting Keepsakes</h3>
                   <p>Our premium chenille bouquets are designed to never wilt or fade, standing as a beautiful permanent reminder of your love.</p>
                 </div>
               </div>
@@ -1845,9 +1511,9 @@
         </div>
       </section>
 
-      <!-- CTA -->
+      <!-- CTA / GET IN TOUCH -->
       <section class="cta">
-        <div class="cta-inner">
+        <div class="cta-inner reveal">
           <p class="cta-eyebrow">Get in Touch</p>
           <h2 class="cta-title">
             Let's create something<br />beautiful together
@@ -1863,8 +1529,11 @@
             </div>
             <div class="cta-founder-info">
               <p class="cta-founder-name">Ruchita Tawade</p>
-              <p class="cta-founder-role">Founder · Velmori Gifts</p>
-              <p class="cta-phone">📱 +91 93566 64679</p>
+              <p class="cta-founder-role">Founder &middot; Velmori Gifts</p>
+              <p class="cta-phone">
+                <svg width="15" height="15"><use href="#icon-phone"/></svg>
+                +91 93566 64679
+              </p>
             </div>
           </div>
 
@@ -1873,7 +1542,7 @@
             class="btn-wa-big"
             target="_blank"
           >
-            <svg width="22" height="22"><use href="#icon-wa"/></svg>
+            <svg width="20" height="20"><use href="#icon-wa"/></svg>
             Chat with Ruchita on WhatsApp
           </a>
         </div>
@@ -1882,36 +1551,27 @@
       <!-- FOOTER -->
       <footer>
         <div class="foot-logo-wrap">
-          <div class="logo-img-circle" style="width:48px;height:48px;border-color:rgba(201,168,76,0.3);">
+          <div class="logo-img-circle" style="width:44px;height:44px;">
             <img src="images/logo.png" alt="Velmori Gifts" loading="lazy" decoding="async" />
           </div>
           <p class="foot-logo">VELMORI <span>Gifts</span></p>
         </div>
-        <p class="foot-sub">Made with Thought · Wrapped with Love</p>
+        <p class="foot-sub">Made with Thought &middot; Wrapped with Love</p>
         <p class="foot-copy">
-          © 2026 Velmori Gifts by Ruchita Tawade · +91 93566 64679
+          &copy; 2026 Velmori Gifts by Ruchita Tawade &middot; +91 93566 64679
         </p>
       </footer>
     </div>
-    <!-- end #post-animation -->
 
+    <!-- JAVASCRIPT: HIGH-PERFORMANCE FRAME STREAMING & SCRUB ENGINE -->
     <script>
-
-
       // ═══════════════════════════════════════════════════════
-      // PETALS
+      // 1. PETALS CANVAS
       // ═══════════════════════════════════════════════════════
       const pCanvas = document.getElementById("petals-canvas");
       const pCtx = pCanvas.getContext("2d");
-      pCanvas.width = window.innerWidth;
-      pCanvas.height = window.innerHeight;
-      const PETAL_COLORS = [
-        "#F5D5C8",
-        "#E8C8B8",
-        "#D4A0B0",
-        "#C9A84C",
-        "#f0c0c8",
-      ];
+      const PETAL_COLORS = ["#F5D5C8", "#E8C8B8", "#D4A0B0", "#C9A84C", "#f0c0c8"];
+
       class Petal {
         constructor() {
           this.reset(true);
@@ -1919,21 +1579,20 @@
         reset(init) {
           this.x = Math.random() * pCanvas.width;
           this.y = init ? Math.random() * pCanvas.height : -20;
-          this.size = 3 + Math.random() * 8;
+          this.size = 3 + Math.random() * 7;
           this.speed = 0.3 + Math.random() * 0.7;
-          this.wind = (Math.random() - 0.5) * 0.4;
+          this.wind = (Math.random() - 0.5) * 0.3;
           this.rot = Math.random() * Math.PI * 2;
-          this.rotSpeed = (Math.random() - 0.5) * 0.03;
-          this.color =
-            PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)];
-          this.opacity = 0.2 + Math.random() * 0.4;
+          this.rotSpeed = (Math.random() - 0.5) * 0.02;
+          this.color = PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)];
+          this.opacity = 0.2 + Math.random() * 0.35;
           this.wobble = Math.random() * Math.PI * 2;
           this.wobbleSpeed = 0.02 + Math.random() * 0.02;
         }
         update() {
           this.y += this.speed;
           this.wobble += this.wobbleSpeed;
-          this.x += this.wind + Math.sin(this.wobble) * 0.4;
+          this.x += this.wind + Math.sin(this.wobble) * 0.35;
           this.rot += this.rotSpeed;
           if (this.y > pCanvas.height + 20) this.reset(false);
         }
@@ -1949,57 +1608,75 @@
           pCtx.restore();
         }
       }
-      const petals = Array.from({ length: 35 }, () => new Petal());
+
+      let petals = [];
+      function initPetals() {
+        pCanvas.width = window.innerWidth;
+        pCanvas.height = window.innerHeight;
+        petals = Array.from({ length: 28 }, () => new Petal());
+      }
+      initPetals();
+
       function animatePetals() {
         pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-        petals.forEach((p) => {
-          p.update();
-          p.draw();
-        });
+        for (let i = 0; i < petals.length; i++) {
+          petals[i].update();
+          petals[i].draw();
+        }
         requestAnimationFrame(animatePetals);
       }
       animatePetals();
 
       // ═══════════════════════════════════════════════════════
-      // FRAME SCROLL ANIMATION
-      // ── Uses ImageBitmap for GPU-decoded, instant draw
-      // ── rAF throttle: only redraws when frame changes
-      // ── Smooth inter-frame lerp via targetProgress
+      // 2. ULTRA-FAST FRAME SCROLL SCRUB ENGINE
       // ═══════════════════════════════════════════════════════
       const frameCanvas = document.getElementById("frame-canvas");
-      const fCtx = frameCanvas.getContext("2d", { alpha: false }); // alpha:false = faster compositing
+      const fCtx = frameCanvas.getContext("2d", { alpha: false });
       const TOTAL_FRAMES = 240;
-      const frameBitmaps = new Array(TOTAL_FRAMES).fill(null); // GPU-decoded bitmaps
-      let loadedCount = 0;
+      const frameBitmaps = new Array(TOTAL_FRAMES).fill(null);
       let currentFrameIdx = -1;
       let targetProgress = 0;
       let rafScheduled = false;
+
+      // Find closest already-loaded frame to eliminate stuttering during fast scroll
+      function getClosestLoadedBitmap(idx) {
+        if (frameBitmaps[idx]) return frameBitmaps[idx];
+        for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+          const prev = idx - offset;
+          if (prev >= 0 && frameBitmaps[prev]) return frameBitmaps[prev];
+          const next = idx + offset;
+          if (next < TOTAL_FRAMES && frameBitmaps[next]) return frameBitmaps[next];
+        }
+        return null;
+      }
 
       function resizeCanvases() {
         pCanvas.width = window.innerWidth;
         pCanvas.height = window.innerHeight;
 
-        const dpr = window.devicePixelRatio || 1;
+        // Cap DPR at 1.5 for ultra-fast canvas compositing without dropping sharpness
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         const W = Math.floor(window.innerWidth * dpr);
         const H = Math.floor(window.innerHeight * dpr);
         frameCanvas.width = W;
         frameCanvas.height = H;
-        // Fill with warm cream so no black flashes between frames
+
         fCtx.fillStyle = "#eee9e4";
         fCtx.fillRect(0, 0, W, H);
         currentFrameIdx = -1; // force redraw
         scheduleRender();
       }
       resizeCanvases();
+
       window.addEventListener("resize", () => {
         clearTimeout(window._resizeTimer);
         window._resizeTimer = setTimeout(resizeCanvases, 150);
-      });
+      }, { passive: true });
 
       function drawBitmap(index) {
-        if (index === currentFrameIdx) return;
-        const bm = frameBitmaps[index];
+        const bm = getClosestLoadedBitmap(index);
         if (!bm) return;
+        if (index === currentFrameIdx && bm === frameBitmaps[index]) return;
         currentFrameIdx = index;
 
         const cw = frameCanvas.width,
@@ -2015,44 +1692,56 @@
         fCtx.drawImage(bm, sx, sy, sw, sh);
       }
 
-      // Pre-decode images into ImageBitmaps (GPU-resident, zero-jank draw)
       function loadFrame(i) {
-        return new Promise(resolve => {
+        if (frameBitmaps[i]) return Promise.resolve(frameBitmaps[i]);
+        return new Promise((resolve) => {
           const img = new Image();
           img.onload = () => {
-            const onBitmap = bm => {
+            const onBitmap = (bm) => {
               frameBitmaps[i] = bm;
-              if (++loadedCount === TOTAL_FRAMES) {
-                frameCanvas.classList.add("ready");
-                resizeCanvases();
-                scheduleRender();
+              if (i === 0 && currentFrameIdx === -1) {
+                drawBitmap(0);
               }
-              resolve();
+              resolve(bm);
             };
-            createImageBitmap(img).then(onBitmap).catch(() => onBitmap(img));
+            if (window.createImageBitmap) {
+              createImageBitmap(img).then(onBitmap).catch(() => onBitmap(img));
+            } else {
+              onBitmap(img);
+            }
           };
+          img.onerror = () => resolve(null);
           img.src = `frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
         });
       }
-      // Progressive loader: first 10 immediately, rest via idle callbacks
-      (function loadAll() {
-        const INITIAL = 10;
-        for (let i = 0; i < Math.min(INITIAL, TOTAL_FRAMES); i++) loadFrame(i);
-        if (TOTAL_FRAMES <= INITIAL) return;
-        setTimeout(() => {
-          let idx = INITIAL;
-          function loadChunk() {
-            const end = Math.min(idx + 15, TOTAL_FRAMES);
-            for (let i = idx; i < end; i++) loadFrame(i);
-            idx = end;
-            if (idx < TOTAL_FRAMES)
-              (window.requestIdleCallback || (fn => setTimeout(fn, 100)))(loadChunk);
-          }
-          loadChunk();
-        }, 500);
-      })();
 
-      // ─── rAF-based render ───────────────────────────────────
+      // Progressive 3-Tier Frame Streaming Strategy
+      async function loadAllFrames() {
+        // Tier 1: Instant load of Frame 1 (< 50ms)
+        await loadFrame(0);
+        drawBitmap(0);
+
+        // Tier 2: Keyframe stride (every 5th frame = 48 frames total) across whole scroll
+        const keyframes = [];
+        for (let i = 0; i < TOTAL_FRAMES; i += 5) {
+          if (i !== 0) keyframes.push(i);
+        }
+        for (let i = 0; i < keyframes.length; i += 6) {
+          await Promise.all(keyframes.slice(i, i + 6).map(loadFrame));
+        }
+
+        // Tier 3: Fill in all remaining intermediate frames in background
+        const remaining = [];
+        for (let i = 0; i < TOTAL_FRAMES; i++) {
+          if (!frameBitmaps[i]) remaining.push(i);
+        }
+        for (let i = 0; i < remaining.length; i += 8) {
+          await Promise.all(remaining.slice(i, i + 8).map(loadFrame));
+        }
+      }
+      loadAllFrames();
+
+      // ─── rAF Render Pipeline ────────────────────────────────
       function scheduleRender() {
         if (!rafScheduled) {
           rafScheduled = true;
@@ -2063,14 +1752,11 @@
       function renderFrame() {
         rafScheduled = false;
         const p = targetProgress;
-        const frameIndex = Math.min(
-          TOTAL_FRAMES - 1,
-          Math.floor(p * TOTAL_FRAMES),
-        );
+        const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor(p * TOTAL_FRAMES));
         drawBitmap(frameIndex);
       }
 
-      // ─── Scroll update (lightweight — just sets targetProgress) ──
+      // ─── Scroll & UI Update ─────────────────────────────────
       const marqueeEl = document.getElementById("marquee");
       const scrollHint = document.getElementById("scroll-hint");
       const progressBar = document.getElementById("scroll-progress");
@@ -2078,56 +1764,45 @@
 
       function updateFrame() {
         const scrolled = window.scrollY;
-        const maxScroll =
-          document.documentElement.scrollHeight - window.innerHeight;
-        const progress =
-          maxScroll > 0 ? Math.max(0, Math.min(1, scrolled / maxScroll)) : 0;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = maxScroll > 0 ? Math.max(0, Math.min(1, scrolled / maxScroll)) : 0;
 
-        // Only re-render if frame would change
-        const newFrameIdx = Math.min(
-          TOTAL_FRAMES - 1,
-          Math.floor(progress * TOTAL_FRAMES),
-        );
+        const newFrameIdx = Math.min(TOTAL_FRAMES - 1, Math.floor(progress * TOTAL_FRAMES));
         if (newFrameIdx !== currentFrameIdx) {
           targetProgress = progress;
           scheduleRender();
         }
 
         // Progress bar
-        progressBar.style.width = progress * 100 + "%";
-        progressBar.style.opacity = "1";
+        progressBar.style.width = (progress * 100) + "%";
 
         // Scroll hint
-        scrollHint.style.opacity = scrolled > 100 ? "0" : "0.8";
+        scrollHint.style.opacity = scrolled > 100 ? "0" : "0.75";
 
-        // Marquee strip: visible when scrolled, but hidden near bottom footer
-        const footerTop = footerEl
-          ? footerEl.getBoundingClientRect().top
-          : window.innerHeight;
+        // Marquee strip: visible when scrolled, hidden at footer
+        const footerTop = footerEl ? footerEl.getBoundingClientRect().top : window.innerHeight;
         const isNearBottom = footerTop <= window.innerHeight;
-
         marqueeEl.classList.toggle("visible", scrolled > 50 && !isNearBottom);
       }
 
       window.addEventListener("scroll", updateFrame, { passive: true });
-      setTimeout(updateFrame, 200);
+      setTimeout(updateFrame, 100);
 
       // ═══════════════════════════════════════════════════════
-      // SCROLL REVEAL FOR POST-ANIMATION SECTIONS
+      // 3. INTERSECTION OBSERVER FOR SCROLL REVEAL
       // ═══════════════════════════════════════════════════════
       const revealObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) entry.target.classList.add("visible");
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
           });
         },
-        { threshold: 0.1 },
+        { threshold: 0.12 }
       );
 
-      document
-        .querySelectorAll(".reveal")
-        .forEach((el) => revealObserver.observe(el));
-
+      document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
     </script>
   </body>
 </html>
