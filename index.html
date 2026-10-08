@@ -51,10 +51,8 @@
         --gold: #a57c65;
         --gold2: #c49f8c;
         --rose: #b56070;
-        --rose2: #d4889a;
         --taupe: #8b7b6b;
         --dark: #3d2b2b;
-        --deep: #2a1a1a;
       }
 
       html {
@@ -146,7 +144,8 @@
         letter-spacing: 1px;
         margin-left: -2px;
       }
-      .nav-logo-img {
+      /* Reusable logo circle — used in nav and footer */
+      .logo-img-circle {
         width: 32px;
         height: 32px;
         border-radius: 50%;
@@ -154,8 +153,11 @@
         border: 1.5px solid rgba(201, 168, 76, 0.4);
         background: #fff9f6;
         flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      .nav-logo-img img {
+      .logo-img-circle img {
         width: 106%;
         height: 106%;
         object-fit: cover;
@@ -558,12 +560,7 @@
         left: 0;
         width: 0%;
         height: 2px;
-        background: linear-gradient(
-          90deg,
-          var(--rose2),
-          var(--gold),
-          var(--gold2)
-        );
+        background: linear-gradient(90deg, var(--rose), var(--gold), var(--gold2));
         z-index: 600;
         transition: width 0.1s linear;
         box-shadow: 0 0 12px rgba(201, 168, 76, 0.5);
@@ -1000,6 +997,18 @@
         background: #fdf6f0;
         padding: 44px 24px;
         text-align: center;
+      }
+      .foot-logo-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .foot-logo-wrap .logo-img-circle {
+        width: 48px;
+        height: 48px;
+        border-color: rgba(201, 168, 76, 0.3);
       }
       .foot-logo {
         font-family: "Cinzel", serif;
@@ -1467,7 +1476,24 @@
           max-width: 400px;
         }
       }
+
+      /* Philosophy text alignment — avoids inline style= overrides */
+      .philosophy .section-label,
+      .philosophy .section-title {
+        text-align: left;
+      }
+      .philosophy .section-title {
+        margin-bottom: 24px;
+      }
     </style>
+
+    <!-- WhatsApp icon defined once, referenced 3× below -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+      <symbol id="icon-wa" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.522 5.849L.057 23.882a.5.5 0 0 0 .613.613l6.085-1.457A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.945 9.945 0 0 1-5.127-1.424l-.367-.218-3.802.912.928-3.748-.24-.386A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+      </symbol>
+    </svg>
   </head>
   <body>
     <!-- SCROLL PROGRESS BAR -->
@@ -1482,7 +1508,7 @@
     <!-- NAV -->
     <nav id="main-nav">
       <div class="nav-logo">
-        <div class="nav-logo-img"><img src="images/logo.png" alt="VG" /></div>
+        <div class="logo-img-circle"><img src="images/logo.png" alt="VG" /></div>
         VELMORI <span>Gifts</span>
       </div>
       <a
@@ -1490,14 +1516,7 @@
         class="nav-cta"
         target="_blank"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
-          />
-          <path
-            d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.522 5.849L.057 23.882a.5.5 0 0 0 .613.613l6.085-1.457A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.945 9.945 0 0 1-5.127-1.424l-.367-.218-3.802.912.928-3.748-.24-.386A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
-          />
-        </svg>
+        <svg width="16" height="16"><use href="#icon-wa"/></svg>
         <span class="nav-cta-text">Order Now</span>
       </a>
     </nav>
@@ -1568,62 +1587,48 @@
      HERO SCENE — sticky pinned scroll zone
      Height 500vh = frame animation plays here
 ═══════════════════════════════════════ -->
-    <div id="hero-scene">
-      <div id="hero-sticky">
-        <div class="hero-inner">
-          <!-- Brand badge -->
-          <div class="badge-wrap">
-            <div class="badge-glow"></div>
-            <div class="badge">
-              <img src="images/logo.png" alt="Velmori Gifts" />
-            </div>
-            <div class="sparkle sp1"></div>
-            <div class="sparkle sp2"></div>
-            <div class="sparkle sp3"></div>
-            <div class="sparkle sp4"></div>
-            <div class="sparkle sp5"></div>
+    <div id="hero-sticky">
+      <div class="hero-inner">
+        <!-- Brand badge -->
+        <div class="badge-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge">
+            <img src="images/logo.png" alt="Velmori Gifts" />
           </div>
-
-          <!-- Text -->
-          <h1 class="hero-title">
-            Because every<br /><em>gift</em> tells a story
-          </h1>
-          <p class="hero-sub">
-            Curated hampers, handmade bouquets &amp; jewellery — crafted with
-            love for the people who matter most.
-          </p>
-
-          <!-- CTAs -->
-          <div class="hero-btns">
-            <a
-              href="https://wa.me/919356664679?text=Hi%20Ruchita!%20I%20saw%20Velmori%20Gifts%20and%20I'd%20love%20to%20place%20an%20order%20%F0%9F%8E%81"
-              class="btn-wa"
-              target="_blank"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path
-                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
-                />
-                <path
-                  d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.522 5.849L.057 23.882a.5.5 0 0 0 .613.613l6.085-1.457A11.945 11.945 0 0 0 12 24c6-5.373 12-5.373 12-12S18.627 0 12 0zm0 22a9.945 9.945 0 0 1-5.127-1.424l-.367-.218-3.802.912.928-3.748-.24-.386A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
-                />
-              </svg>
-              Order on WhatsApp
-            </a>
-            <a href="tel:+919356664679" class="btn-ghost">📞 +91 93566 64679</a>
-          </div>
+          <div class="sparkle sp1"></div>
+          <div class="sparkle sp2"></div>
+          <div class="sparkle sp3"></div>
+          <div class="sparkle sp4"></div>
+          <div class="sparkle sp5"></div>
         </div>
 
-        <!-- Scroll hint (fades as user scrolls) -->
-        <div class="scroll-hint" id="scroll-hint">
-          <span>scroll</span>
-          <div class="scroll-line"></div>
+        <!-- Text -->
+        <h1 class="hero-title">
+          Because every<br /><em>gift</em> tells a story
+        </h1>
+        <p class="hero-sub">
+          Curated hampers, handmade bouquets &amp; jewellery — crafted with
+          love for the people who matter most.
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero-btns">
+          <a
+            href="https://wa.me/919356664679?text=Hi%20Ruchita!%20I%20saw%20Velmori%20Gifts%20and%20I'd%20love%20to%20place%20an%20order%20%F0%9F%8E%81"
+            class="btn-wa"
+            target="_blank"
+          >
+            <svg width="20" height="20"><use href="#icon-wa"/></svg>
+            Order on WhatsApp
+          </a>
+          <a href="tel:+919356664679" class="btn-ghost">📞 +91 93566 64679</a>
         </div>
+      </div>
+
+      <!-- Scroll hint (fades as user scrolls) -->
+      <div class="scroll-hint" id="scroll-hint">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
       </div>
     </div>
 
@@ -1762,11 +1767,9 @@
       <section class="testimonials">
         <div class="testi-inner">
           <div class="testi-header reveal">
-            <span class="section-label" style="color: var(--gold)"
-              >Happy Customers</span
-            >
-            <h2 class="section-title" style="color: var(--dark)">
-              Words from our <em style="color: var(--rose)">lovely people</em>
+            <span class="section-label">Happy Customers</span>
+            <h2 class="section-title">
+              Words from our <em>lovely people</em>
             </h2>
           </div>
           <div class="testi-grid">
@@ -1805,11 +1808,11 @@
       <section class="philosophy">
         <div class="philosophy-inner">
           <div class="philosophy-content reveal">
-            <span class="section-label" style="text-align: left;">Our Philosophy</span>
-            <h2 class="section-title" style="text-align: left; margin-bottom: 24px;">
+            <span class="section-label">Our Philosophy</span>
+            <h2 class="section-title">
               Gifts meant to be <em>cherished forever</em>
             </h2>
-            <p class="process-desc" style="text-align: left; font-size: 16px; margin-bottom: 20px;">
+            <p class="process-desc" style="font-size: 16px; margin-bottom: 20px;">
               At Velmori Gifts, we believe a gift shouldn't just be an item — it should be a physical manifestation of a beautiful relationship, wrapped with thoughtfulness.
             </p>
             <div class="philosophy-list">
@@ -1870,14 +1873,7 @@
             class="btn-wa-big"
             target="_blank"
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
-              />
-              <path
-                d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.522 5.849L.057 23.882a.5.5 0 0 0 .613.613l6.085-1.457A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.945 9.945 0 0 1-5.127-1.424l-.367-.218-3.802.912.928-3.748-.24-.386A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
-              />
-            </svg>
+            <svg width="22" height="22"><use href="#icon-wa"/></svg>
             Chat with Ruchita on WhatsApp
           </a>
         </div>
@@ -1885,35 +1881,9 @@
 
       <!-- FOOTER -->
       <footer>
-        <div
-          style="
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 16px;
-          "
-        >
-          <div
-            style="
-              width: 48px;
-              height: 48px;
-              border-radius: 50%;
-              overflow: hidden;
-              border: 1.5px solid rgba(201, 168, 76, 0.3);
-              background: #fff9f6;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            "
-          >
-            <img
-              src="images/logo.png"
-              alt="Velmori Gifts"
-              loading="lazy"
-              decoding="async"
-              style="width: 106%; height: 106%; object-fit: cover"
-            />
+        <div class="foot-logo-wrap">
+          <div class="logo-img-circle" style="width:48px;height:48px;border-color:rgba(201,168,76,0.3);">
+            <img src="images/logo.png" alt="Velmori Gifts" loading="lazy" decoding="async" />
           </div>
           <p class="foot-logo">VELMORI <span>Gifts</span></p>
         </div>
@@ -1979,8 +1949,7 @@
           pCtx.restore();
         }
       }
-      const petals = [];
-      for (let i = 0; i < 35; i++) petals.push(new Petal());
+      const petals = Array.from({ length: 35 }, () => new Petal());
       function animatePetals() {
         pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
         petals.forEach((p) => {
@@ -2048,65 +2017,39 @@
 
       // Pre-decode images into ImageBitmaps (GPU-resident, zero-jank draw)
       function loadFrame(i) {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           const img = new Image();
           img.onload = () => {
-            createImageBitmap(img)
-              .then((bm) => {
-                frameBitmaps[i] = bm;
-                loadedCount++;
-                if (loadedCount === TOTAL_FRAMES) {
-                  frameCanvas.classList.add("ready");
-                  resizeCanvases();
-                  scheduleRender();
-                }
-                resolve();
-              })
-              .catch(() => {
-                // Fallback: store raw img if createImageBitmap fails
-                frameBitmaps[i] = img;
-                loadedCount++;
-                if (loadedCount === TOTAL_FRAMES) {
-                  frameCanvas.classList.add("ready");
-                  resizeCanvases();
-                  scheduleRender();
-                }
-                resolve();
-              });
+            const onBitmap = bm => {
+              frameBitmaps[i] = bm;
+              if (++loadedCount === TOTAL_FRAMES) {
+                frameCanvas.classList.add("ready");
+                resizeCanvases();
+                scheduleRender();
+              }
+              resolve();
+            };
+            createImageBitmap(img).then(onBitmap).catch(() => onBitmap(img));
           };
           img.src = `frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
         });
       }
-      // Progressively load frames to avoid network congestion
+      // Progressive loader: first 10 immediately, rest via idle callbacks
       (function loadAll() {
-        // Load first 10 frames immediately for quick initial scroll response
-        const initialLoad = 10;
-        for (let i = 0; i < Math.min(initialLoad, TOTAL_FRAMES); i++) {
-          loadFrame(i);
-        }
-        
-        // Lazy load the rest progressively in chunks
-        if (TOTAL_FRAMES > initialLoad) {
-          setTimeout(() => {
-            let currentIdx = initialLoad;
-            function loadChunk() {
-              const chunkEnd = Math.min(currentIdx + 15, TOTAL_FRAMES);
-              for (let i = currentIdx; i < chunkEnd; i++) {
-                loadFrame(i);
-              }
-              currentIdx = chunkEnd;
-              if (currentIdx < TOTAL_FRAMES) {
-                // Wait for the browser to idle a bit before loading the next chunk
-                if (window.requestIdleCallback) {
-                  window.requestIdleCallback(loadChunk);
-                } else {
-                  setTimeout(loadChunk, 100);
-                }
-              }
-            }
-            loadChunk();
-          }, 500); // Start background loading after half a second
-        }
+        const INITIAL = 10;
+        for (let i = 0; i < Math.min(INITIAL, TOTAL_FRAMES); i++) loadFrame(i);
+        if (TOTAL_FRAMES <= INITIAL) return;
+        setTimeout(() => {
+          let idx = INITIAL;
+          function loadChunk() {
+            const end = Math.min(idx + 15, TOTAL_FRAMES);
+            for (let i = idx; i < end; i++) loadFrame(i);
+            idx = end;
+            if (idx < TOTAL_FRAMES)
+              (window.requestIdleCallback || (fn => setTimeout(fn, 100)))(loadChunk);
+          }
+          loadChunk();
+        }, 500);
       })();
 
       // ─── rAF-based render ───────────────────────────────────
@@ -2163,11 +2106,7 @@
           : window.innerHeight;
         const isNearBottom = footerTop <= window.innerHeight;
 
-        if (scrolled > 50 && !isNearBottom) {
-          marqueeEl.classList.add("visible");
-        } else {
-          marqueeEl.classList.remove("visible");
-        }
+        marqueeEl.classList.toggle("visible", scrolled > 50 && !isNearBottom);
       }
 
       window.addEventListener("scroll", updateFrame, { passive: true });
