@@ -36,7 +36,6 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Lato:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
     <style>
       *,
       *::before,
@@ -59,17 +58,7 @@
       }
 
       html {
-        scroll-behavior: auto !important;
-      }
-      html.lenis,
-      html.lenis body {
-        height: auto;
-      }
-      .lenis-smooth {
-        scroll-behavior: auto !important;
-      }
-      .lenis-stopped {
-        overflow: hidden;
+        scroll-behavior: smooth;
       }
 
       body {
@@ -135,9 +124,6 @@
         transition:
           background 0.5s,
           backdrop-filter 0.5s;
-      }
-      nav.scrolled {
-        /* Kept completely transparent without background, blur, or bottom border on scroll */
       }
       .nav-logo {
         font-family: "Cinzel", serif;
@@ -246,91 +232,6 @@
         );
         z-index: 0;
         pointer-events: none;
-      }
-
-
-      /* ── SCROLL TEXT REVEALS (appear during animation at set progress) ── */
-      .scroll-reveal-text {
-        position: absolute;
-        z-index: 4;
-        opacity: 0;
-        transform: translateY(24px);
-        transition:
-          opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-          transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        pointer-events: none;
-        text-align: center;
-        max-width: 340px;
-      }
-      .scroll-reveal-text.active {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      /* Left panel */
-      .srt-left {
-        left: 5%;
-        top: 50%;
-        transform: translateY(calc(-50% + 24px));
-      }
-      .srt-left.active {
-        transform: translateY(-50%);
-      }
-      /* Right panel */
-      .srt-right {
-        right: 5%;
-        top: 50%;
-        transform: translateY(calc(-50% + 24px));
-      }
-      .srt-right.active {
-        transform: translateY(-50%);
-      }
-      /* Bottom panel */
-      .srt-bottom {
-        bottom: 18%;
-        left: 50%;
-        transform: translateX(-50%) translateY(24px);
-      }
-      .srt-bottom.active {
-        transform: translateX(-50%) translateY(0);
-      }
-
-      .srt-label {
-        font-size: 13px;
-        letter-spacing: 5px;
-        text-transform: uppercase;
-        color: var(--gold);
-        margin-bottom: 8px;
-        font-weight: 700;
-        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-      }
-      .srt-value {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(20px, 2.5vw, 28px);
-        font-weight: 600;
-        color: var(--dark);
-        line-height: 1.2;
-        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-      }
-      .srt-value em {
-        font-style: italic;
-        color: var(--rose);
-      }
-      .srt-stat {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(32px, 4vw, 48px);
-        font-weight: 600;
-        color: var(--gold);
-        line-height: 1;
-        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-      }
-      .srt-stat-label {
-        font-size: 13px;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        color: var(--taupe);
-        margin-top: 6px;
-        font-weight: 700;
-        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
       }
 
       .hero-inner {
@@ -1147,65 +1048,6 @@
       }
 
       /* ══════════════════════════════════════════════
-   CUSTOM CURSOR
-══════════════════════════════════════════════ */
-      #ripple-container {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        pointer-events: none;
-      }
-      .cursor-dot {
-        position: fixed;
-        width: 8px;
-        height: 8px;
-        background-color: var(--gold2);
-        border-radius: 50%;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        z-index: 10000;
-        will-change: left, top;
-        opacity: 0;
-        transition: opacity 0.3s ease, transform 0.2s ease, background-color 0.2s ease;
-      }
-      .cursor-ring {
-        position: fixed;
-        width: 32px;
-        height: 32px;
-        border: 1px solid rgba(201, 168, 76, 0.5);
-        border-radius: 50%;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-        will-change: left, top;
-        opacity: 0;
-        transition: opacity 0.3s ease, width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-      }
-
-      /* Hover States */
-      .cursor-ring.hovered {
-        width: 48px;
-        height: 48px;
-        border-color: var(--rose);
-        background-color: rgba(181, 96, 112, 0.05);
-      }
-      .cursor-dot.hovered {
-        background-color: var(--rose);
-        transform: translate(-50%, -50%) scale(1.5);
-      }
-
-      /* Hide default cursor only on devices that support hover (desktops) */
-      @media (hover: hover) and (pointer: fine) {
-        body, a, button, [role="button"], input, textarea, select {
-          cursor: none;
-        }
-        .cursor-dot,
-        .cursor-ring {
-          display: block;
-        }
-      }
-
-      /* ══════════════════════════════════════════════
    RESPONSIVE DESIGN
 ══════════════════════════════════════════════ */
 
@@ -1307,11 +1149,6 @@
         }
         .testi-card {
           padding: 24px;
-        }
-
-        /* Hide scroll-reveal text panels on mobile — they clash with animation */
-        .scroll-reveal-text {
-          display: none !important;
         }
 
         .badge {
@@ -1635,12 +1472,6 @@
   <body>
     <!-- SCROLL PROGRESS BAR -->
     <div id="scroll-progress"></div>
-
-    <!-- RIPPLE CONTAINER -->
-    <div id="ripple-container">
-      <div class="cursor-dot"></div>
-      <div class="cursor-ring"></div>
-    </div>
 
     <!-- FRAME CANVAS - fixed, full screen, behind everything -->
     <canvas id="frame-canvas"></canvas>
@@ -2095,20 +1926,7 @@
     <!-- end #post-animation -->
 
     <script>
-      // ═══════════════════════════════════════════════════════
-      // LENIS
-      // ═══════════════════════════════════════════════════════
-      const lenis = new Lenis({
-        duration: 1.1,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        smoothTouch: false,
-      });
-      function raf(t) {
-        lenis.raf(t);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
+
 
       // ═══════════════════════════════════════════════════════
       // PETALS
@@ -2117,10 +1935,6 @@
       const pCtx = pCanvas.getContext("2d");
       pCanvas.width = window.innerWidth;
       pCanvas.height = window.innerHeight;
-      window.addEventListener("resize", () => {
-        pCanvas.width = window.innerWidth;
-        pCanvas.height = window.innerHeight;
-      });
       const PETAL_COLORS = [
         "#F5D5C8",
         "#E8C8B8",
@@ -2187,14 +2001,15 @@
       const fCtx = frameCanvas.getContext("2d", { alpha: false }); // alpha:false = faster compositing
       const TOTAL_FRAMES = 240;
       const frameBitmaps = new Array(TOTAL_FRAMES).fill(null); // GPU-decoded bitmaps
-      const frameImgs = [];
       let loadedCount = 0;
       let currentFrameIdx = -1;
       let targetProgress = 0;
-      let animationComplete = false;
       let rafScheduled = false;
 
-      function resizeFrameCanvas() {
+      function resizeCanvases() {
+        pCanvas.width = window.innerWidth;
+        pCanvas.height = window.innerHeight;
+
         const dpr = window.devicePixelRatio || 1;
         const W = Math.floor(window.innerWidth * dpr);
         const H = Math.floor(window.innerHeight * dpr);
@@ -2206,10 +2021,10 @@
         currentFrameIdx = -1; // force redraw
         scheduleRender();
       }
-      resizeFrameCanvas();
+      resizeCanvases();
       window.addEventListener("resize", () => {
         clearTimeout(window._resizeTimer);
-        window._resizeTimer = setTimeout(resizeFrameCanvas, 150);
+        window._resizeTimer = setTimeout(resizeCanvases, 150);
       });
 
       function drawBitmap(index) {
@@ -2242,7 +2057,7 @@
                 loadedCount++;
                 if (loadedCount === TOTAL_FRAMES) {
                   frameCanvas.classList.add("ready");
-                  resizeFrameCanvas();
+                  resizeCanvases();
                   scheduleRender();
                 }
                 resolve();
@@ -2253,14 +2068,13 @@
                 loadedCount++;
                 if (loadedCount === TOTAL_FRAMES) {
                   frameCanvas.classList.add("ready");
-                  resizeFrameCanvas();
+                  resizeCanvases();
                   scheduleRender();
                 }
                 resolve();
               });
           };
           img.src = `frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
-          frameImgs.push(img);
         });
       }
       // Progressively load frames to avoid network congestion
@@ -2314,12 +2128,10 @@
       }
 
       // ─── Scroll update (lightweight — just sets targetProgress) ──
-      const heroScene = document.getElementById("hero-scene");
-      const postAnim = document.getElementById("post-animation");
       const marqueeEl = document.getElementById("marquee");
       const scrollHint = document.getElementById("scroll-hint");
       const progressBar = document.getElementById("scroll-progress");
-      const srtItems = document.querySelectorAll(".scroll-reveal-text");
+      const footerEl = document.querySelector("footer");
 
       function updateFrame() {
         const scrolled = window.scrollY;
@@ -2346,7 +2158,6 @@
         scrollHint.style.opacity = scrolled > 100 ? "0" : "0.8";
 
         // Marquee strip: visible when scrolled, but hidden near bottom footer
-        const footerEl = document.querySelector("footer");
         const footerTop = footerEl
           ? footerEl.getBoundingClientRect().top
           : window.innerHeight;
@@ -2357,21 +2168,10 @@
         } else {
           marqueeEl.classList.remove("visible");
         }
-
-        // Frame canvas is always visible as background
-        frameCanvas.style.opacity = "1";
       }
 
-      lenis.on("scroll", updateFrame);
       window.addEventListener("scroll", updateFrame, { passive: true });
       setTimeout(updateFrame, 200);
-
-      // Nav scroll state
-      lenis.on("scroll", ({ scroll }) => {
-        const nav = document.getElementById("main-nav");
-        if (scroll > 50) nav.classList.add("scrolled");
-        else nav.classList.remove("scrolled");
-      });
 
       // ═══════════════════════════════════════════════════════
       // SCROLL REVEAL FOR POST-ANIMATION SECTIONS
@@ -2389,76 +2189,6 @@
         .querySelectorAll(".reveal")
         .forEach((el) => revealObserver.observe(el));
 
-      // ═══════════════════════════════════════════════════════
-      // CUSTOM CURSOR TRAIL
-      // ═══════════════════════════════════════════════════════
-      (function () {
-        const dot = document.querySelector(".cursor-dot");
-        const ring = document.querySelector(".cursor-ring");
-        if (!dot || !ring) return;
-
-        let mouseX = -100, mouseY = -100;
-        let dotX = -100, dotY = -100;
-        let ringX = -100, ringY = -100;
-        let hasMoved = false;
-
-        window.addEventListener("mousemove", (e) => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-          if (!hasMoved) {
-            hasMoved = true;
-            dot.style.opacity = "1";
-            ring.style.opacity = "1";
-            // Initialize positions instantly on first move
-            dotX = ringX = mouseX;
-            dotY = ringY = mouseY;
-          }
-        });
-
-        // Interactive hover states
-        const updateHoverState = (isHover) => {
-          if (isHover) {
-            dot.classList.add("hovered");
-            ring.classList.add("hovered");
-          } else {
-            dot.classList.remove("hovered");
-            ring.classList.remove("hovered");
-          }
-        };
-
-        // Delegate hover listening on interactive elements
-        document.addEventListener("mouseover", (e) => {
-          const target = e.target.closest("a, button, .btn-wa, .btn-ghost, .btn-wa-big, [role='button']");
-          if (target) {
-            updateHoverState(true);
-          }
-        });
-        document.addEventListener("mouseout", (e) => {
-          const target = e.target.closest("a, button, .btn-wa, .btn-ghost, .btn-wa-big, [role='button']");
-          if (target) {
-            updateHoverState(false);
-          }
-        });
-
-        function tick() {
-          if (hasMoved) {
-            // Lerp dot position (faster)
-            dotX += (mouseX - dotX) * 0.25;
-            dotY += (mouseY - dotY) * 0.25;
-
-            // Lerp ring position (slower for trailing effect)
-            ringX += (mouseX - ringX) * 0.12;
-            ringY += (mouseY - ringY) * 0.12;
-
-            dot.style.left = `${dotX}px`;
-            dot.style.top = `${dotY}px`;
-            ring.style.left = `${ringX}px`;
-            ring.style.top = `${ringY}px`;
-          }
-          requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-      })();
     </script>
   </body>
 </html>

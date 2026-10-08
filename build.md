@@ -13,13 +13,11 @@ It does not use a bundler or compiler (Vite/Webpack) to keep load times absolute
 ```mermaid
 graph TD
     A[index.html] --> B[Embedded Vanilla CSS]
-    A --> C[Lenis Scroll Manager]
-    C --> D[Canvas 1: falling petals]
-    C --> E[Canvas 2: frame scroll-scrub]
-    C --> F[IntersectionObserver Scroll Reveal]
-    A --> G[DOM Pool Cursor Ripple]
-    A --> H[Progressive Frame Preloader]
-    H --> E
+    A --> C[Canvas 1: falling petals]
+    A --> D[Canvas 2: frame scroll-scrub]
+    A --> E[IntersectionObserver Scroll Reveal]
+    A --> F[Progressive Frame Preloader]
+    F --> D
 ```
 
 ---
@@ -62,25 +60,11 @@ setTimeout(() => {
 }, 500);
 ```
 
-### 2. High-Performance Cursor Ripple Trail (DOM Object Pool)
-To bypass the memory allocation and Garbage Collection (GC) pauses associated with generating hundreds of cursor-trail divs, a **fixed DOM object pool** is implemented:
-- A flat pool of `40` `.ripple-ring` divs is instantiated into `#ripple-container` during DOM load.
-- When the mouse moves past a threshold distance of `40px`, the next pool element is repositioned to `e.clientX` / `e.clientY` and marked active.
-- An animation loop updates scale and opacity using light inline styling (`opacity: 1 - Math.pow(r.age, 1.2)`), avoiding layout thrashing.
-- Unused elements are styled with `opacity: 0` instead of being removed from the DOM.
-
-### 3. Lenis Smooth Scroll Manager
-Scroll behaviors are hooked into Lenis for premium, inertia-based momentum:
-- Custom configuration handles scroll physics:
-  ```javascript
-  const lenis = new Lenis({
-    duration: 1.1,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    smoothTouch: false, // Touch disabled to prevent native scroll collision on mobile
-  });
-  ```
-- Native CSS scrolling is disabled (`html { scroll-behavior: auto !important; }`) to ensure no race conditions.
+### 2. Native Smooth Scroll & Composite Rendering
+Scroll scrub behaviors use browser-native passive scroll listeners with zero external momentum dependencies:
+- CSS sets native smooth scrolling (`scroll-behavior: smooth`).
+- `updateFrame` updates `targetProgress` throttled to `requestAnimationFrame`, redrawing only when frame index shifts.
+- Eliminates external CDN bloat (Lenis) and prevents single point of failure when running offline.
 
 ---
 
@@ -135,5 +119,4 @@ This project is configured as a fully static application.
 
 - [ ] **Do not use tailwind or other compilers** unless explicitly requested. Maintain Vanilla CSS within the head block.
 - [ ] **Do not modify the frame load batch values** below `15` or above `30` without benchmarking network saturation on 3G speeds.
-- [ ] **Maintain DOM Pool Integrity**: Never dynamically `createElement` or `remove` trail components in loop scopes. Reuse pre-instantiated arrays.
 - [ ] **Alt Tags**: Always provide descriptive `alt` texts on images for search crawler readability.
